@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedDesa - Admin Panel</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +18,7 @@
             --secondary-color: #64748b;
             --accent-color: #06b6d4;
         }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background:
@@ -24,6 +26,7 @@
                 radial-gradient(circle at 90% 20%, rgba(165, 180, 252, 0.14), transparent 28%),
                 #f8fafc;
         }
+
         .sidebar-active {
             background-color: var(--primary-color);
             color: white;
