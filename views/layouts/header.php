@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MedDesa - Admin Panel</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -15,7 +18,11 @@
             --accent-color: #06b6d4;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background:
+                radial-gradient(circle at 20% 0%, rgba(125, 211, 252, 0.18), transparent 35%),
+                radial-gradient(circle at 90% 20%, rgba(165, 180, 252, 0.14), transparent 28%),
+                #f8fafc;
         }
         .sidebar-active {
             background-color: var(--primary-color);

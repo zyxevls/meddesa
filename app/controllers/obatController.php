@@ -49,4 +49,26 @@ class ObatController
 
         require '../views/layouts/app.php';
     }
+
+    public function update($id)
+    {
+        Middleware::auth();
+
+        $this->repo->update($id, [
+            $_POST['nama'],
+            $_POST['harga'],
+            $_POST['stok']
+        ]);
+
+        header('Location: /admin/obat');
+    }
+
+    public function destroy($id)
+    {
+        Middleware::auth();
+
+        $this->repo->delete($id);
+
+        header('Location: /admin/obat');
+    }
 }

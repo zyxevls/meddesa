@@ -8,6 +8,8 @@ require '../app/services/authServices.php';
 require '../app/controllers/homeController.php';
 require '../app/controllers/authController.php';
 require '../app/controllers/dashboardController.php';
+require '../app/controllers/obatController.php';
+require '../app/repositories/obatRepository.php';
 require '../config/database.php';
 
 $router = new Router();
