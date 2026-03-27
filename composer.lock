@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa94530e968b93634ec8018f81f22ab5",
+    "content-hash": "9f36b0729ea8277ec6a2cd52659e602c",
     "packages": [
         {
             "name": "graham-campbell/result-type",
@@ -595,6 +595,48 @@
             "time": "2025-12-27T19:49:13+00:00"
         },
         {
+            "name": "weblabnl/breadcrumb",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Weblab-nl/breadcrumb.git",
+                "reference": "cecb358df24ea6f148a49a3de19c2729cc2b57ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Weblab-nl/breadcrumb/zipball/cecb358df24ea6f148a49a3de19c2729cc2b57ad",
+                "reference": "cecb358df24ea6f148a49a3de19c2729cc2b57ad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Breadcrumb": "Weblab\\Breadcrumb\\BreadcrumbFacade"
+                    },
+                    "providers": [
+                        "Weblab\\Breadcrumb\\BreadcrumbServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Weblab\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Small library help generating breadcrumbs",
+            "support": {
+                "issues": "https://github.com/Weblab-nl/breadcrumb/issues",
+                "source": "https://github.com/Weblab-nl/breadcrumb/tree/master"
+            },
+            "time": "2022-12-29T11:10:44+00:00"
+        },
+        {
             "name": "yoeunes/regex-parser",
             "version": "v1.3.0",
             "source": {
@@ -686,7 +728,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "weblabnl/breadcrumb": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {},

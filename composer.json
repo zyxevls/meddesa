@@ -17,6 +17,7 @@
     "require": {
         "vlucas/phpdotenv": "^5.6",
         "php-flasher/flasher": "*",
-        "psr/container": "^2.0"
+        "psr/container": "^2.0",
+        "weblabnl/breadcrumb": "dev-master"
     }
 }
