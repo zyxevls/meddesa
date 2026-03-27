@@ -4,6 +4,6 @@ class HomeController
 {
     public function index()
     {
-        require '../views/home.php';
+        require_once BASE_PATH . '/views/home.php';
     }
 }

@@ -1,20 +1,30 @@
 <?php
 
+define('BASE_PATH', __DIR__ . '/..');
+
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../app/helpers/flasher.php';
+
 session_start();
 
-require '../app/core/router.php';
-require '../app/core/middleware.php';
-require '../app/services/authServices.php';
-require '../app/controllers/homeController.php';
-require '../app/controllers/authController.php';
-require '../app/controllers/dashboardController.php';
-require '../app/controllers/obatController.php';
-require '../app/repositories/obatRepository.php';
-require '../config/database.php';
+require_once __DIR__ . '/../app/core/router.php';
+require_once __DIR__ . '/../app/core/middleware.php';
+require_once __DIR__ . '/../app/services/authServices.php';
+require_once __DIR__ . '/../app/controllers/homeController.php';
+require_once __DIR__ . '/../app/controllers/authController.php';
+require_once __DIR__ . '/../app/controllers/dashboardController.php';
+require_once __DIR__ . '/../app/controllers/obatController.php';
+require_once __DIR__ . '/../app/controllers/pasienController.php';
+require_once __DIR__ . '/../app/repositories/obatRepository.php';
+require_once __DIR__ . '/../app/repositories/pasienRepository.php';
+require_once __DIR__ . '/../config/database.php';
+
+bootstrapFlasher();
 
 $router = new Router();
-require '../routes/web.php';
+require __DIR__ . '/../routes/web.php';
 
+// Parse URL path from request
 $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
 $url = parse_url($requestUri, PHP_URL_PATH) ?? '/';
 $scriptDir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
@@ -22,6 +32,7 @@ $scriptDir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')
 if ($scriptDir !== '' && $scriptDir !== '/' && strpos($url, $scriptDir) === 0) {
     $url = substr($url, strlen($scriptDir));
 }
+
 
 if ($url === '' || $url === '/index.php') {
     $url = '/';

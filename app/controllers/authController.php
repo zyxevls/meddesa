@@ -11,7 +11,7 @@ class AuthController
 
     public function showLogin()
     {
-        require '../views/auth/login.php';
+        require BASE_PATH . '/views/auth/login.php';
     }
 
     public function login()
@@ -20,16 +20,21 @@ class AuthController
         $password = $_POST['password'];
 
         if ($this->auth->login($username, $password)) {
-            header("Location: /dashboard");
+            flash()->success('Login berhasil. Selamat datang kembali!');
+            header("Location: /admin/dashboard");
             exit;
         }
 
-        echo "Login Gagal";
+        flash()->error('Username atau password tidak valid.');
+        header("Location: /login");
+        exit;
     }
 
     public function logout()
     {
         $this->auth->logout();
+        flash()->info('Anda telah logout.');
         header("Location: /login");
+        exit;
     }
 }

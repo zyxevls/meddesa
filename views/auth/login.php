@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -21,6 +21,8 @@
             Login
         </button>
     </form>
+
+    <?php echo flash()->render('html'); ?>
 
 </body>
 

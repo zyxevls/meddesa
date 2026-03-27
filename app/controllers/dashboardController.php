@@ -6,7 +6,7 @@ class DashboardController
     {
         Middleware::auth();
 
-        $content = '../views/dashboard/index.php';
-        require '../views/layouts/app.php';
+        $content = BASE_PATH . '/views/admin/dashboard/index.php';
+        require BASE_PATH . '/views/layouts/app.php';
     }
 }

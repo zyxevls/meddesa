@@ -13,7 +13,7 @@ class Middleware
     public static function guest()
     {
         if (isset($_SESSION['user'])) {
-            header('Location: /dashboard');
+            header('Location: /admin/dashboard');
             exit();
         }
     }

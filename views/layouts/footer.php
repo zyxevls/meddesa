@@ -11,6 +11,7 @@
             </div>
         </div>
     </footer>
+    <?php echo flash()->render('html'); ?>
     <script>
         (function($) {
             if (!$) {
@@ -113,10 +114,15 @@
                 updateActiveSidebar(path);
 
                 if (shouldPushState) {
-                    history.pushState({ path: path }, '', path);
+                    history.pushState({
+                        path: path
+                    }, '', path);
                 }
 
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             }
 
             function fetchAndRender(path, shouldPushState) {
@@ -168,6 +174,10 @@
             $(document).on('click', 'a', function(event) {
                 var $link = $(this);
                 var href = $link.attr('href');
+
+                if ($link.hasClass('handle-swal')) {
+                    return;
+                }
 
                 if (!href || href.charAt(0) === '#') {
                     return;

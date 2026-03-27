@@ -1,5 +1,5 @@
-<?php require 'header.php'; ?>
-<?php require 'sidebar.php'; ?>
+<?php require BASE_PATH . '/views/layouts/header.php'; ?>
+<?php require BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
         <!-- Main Content Area -->
         <div class="flex-1 ml-56">
@@ -9,4 +9,4 @@
         </div>
     </div>
 
-<?php require 'footer.php'; ?>
+<?php require BASE_PATH . '/views/layouts/footer.php'; ?>

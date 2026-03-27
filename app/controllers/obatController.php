@@ -14,17 +14,17 @@ class ObatController
         Middleware::auth();
 
         $obats = $this->repo->all();
-        $content = '../views/obat/index.php';
+        $content = BASE_PATH . '/views/admin/obat/index.php';
 
-        require '../views/layouts/app.php';
+        require BASE_PATH . '/views/layouts/app.php';
     }
 
     public function create()
     {
         Middleware::auth();
 
-        $content = '../views/obat/create.php';
-        require '../views/layouts/app.php';
+        $content = BASE_PATH . '/views/admin/obat/create.php';
+        require BASE_PATH . '/views/layouts/app.php';
     }
 
     public function store()
@@ -37,7 +37,9 @@ class ObatController
             $_POST['stok']
         ]);
 
+        flash()->success('Data obat berhasil ditambahkan.');
         header('Location: /admin/obat');
+        exit;
     }
 
     public function edit($id)
@@ -45,9 +47,9 @@ class ObatController
         Middleware::auth();
 
         $obat = $this->repo->find($id);
-        $content = '../views/obat/edit.php';
+        $content = BASE_PATH . '/views/admin/obat/edit.php';
 
-        require '../views/layouts/app.php';
+        require BASE_PATH . '/views/layouts/app.php';
     }
 
     public function update($id)
@@ -60,7 +62,9 @@ class ObatController
             $_POST['stok']
         ]);
 
+        flash()->success('Data obat berhasil diperbarui.');
         header('Location: /admin/obat');
+        exit;
     }
 
     public function destroy($id)
@@ -69,6 +73,8 @@ class ObatController
 
         $this->repo->delete($id);
 
+        flash()->success('Data obat berhasil dihapus.');
         header('Location: /admin/obat');
+        exit;
     }
 }

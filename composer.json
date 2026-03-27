@@ -1,0 +1,22 @@
+{
+    "name": "zyxevls/meddesa",
+    "description": "MedDesa CMS adalah platform CMS dan SaaS sederhana yang dirancang khusus untuk Website Puskesmas Desa di Indonesia",
+    "type": "project",
+    "license": "Apache-2.0",
+    "autoload": {
+        "psr-4": {
+            "Zyxevls\\Meddesa\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "muhamad jaelani",
+            "email": "jaelanim465@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "php-flasher/flasher": "*",
+        "psr/container": "^2.0"
+    }
+}
