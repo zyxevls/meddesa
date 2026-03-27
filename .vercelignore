@@ -1,7 +1,0 @@
-.env
-.vscode
-hash.php
-/vendor/
-/public/vendor/
-/storage/
-.git/

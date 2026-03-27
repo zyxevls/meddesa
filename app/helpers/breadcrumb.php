@@ -12,7 +12,7 @@ $breadcrumbLabels = [
     'detail' => 'Detail',
 ];
 
-function breadcrumbs(string $currentPageTitle = null): Breadcrumb
+function breadcrumbs(?string $currentPageTitle = null): Breadcrumb
 {
     global $breadcrumbLabels;
 
