@@ -4,7 +4,9 @@
 
 ![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-3.7.1-0868AC?style=for-the-badge&logo=jquery&logoColor=white)
+![Composer](https://img.shields.io/badge/Composer-2.x-F38C20?style=for-the-badge&logo=composer&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 > Sistem Informasi Manajemen Puskesmas Desa berbasis PHP Native dengan Clean Architecture yang modern, scalable, dan mudah dikembangkan.
@@ -22,7 +24,7 @@ MedDesa CMS adalah platform CMS dan SaaS sederhana yang dirancang khusus untuk W
 | 🏠 **Landing Page** | Halaman publik untuk menampilkan informasi puskesmas |
 | 📊 **Dashboard Admin** | Panel kontrol dengan statistik dan visualisasi data |
 | 💊 **Manajemen Obat** | CRUD obat, stok, dan kategori obat |
-| 👥 **Manajemen Pasien** | Registrasi dan data rekam medis pasien |
+| 👥 **Manajemen Pasien** | CRUD pasien, detail rekam medis, dan pencarian |
 | 👨‍⚕️ **Manajemen Dokter** | Data dokter, jadwal, dan spesialisasi |
 | 📋 **Rekam Medis** | Pencatatan riwayat kunjungan dan treatment |
 | 📅 **Antrian & Booking** | Sistem antrian online dan reservasi jadwal |
@@ -50,6 +52,7 @@ meddesa/
 │   └── database.php     # Konfigurasi koneksi database
 │
 ├── public/
+│   ├── .htaccess         # URL Rewriting rules
 │   └── index.php         # Entry point aplikasi
 │
 ├── routes/
@@ -57,13 +60,24 @@ meddesa/
 │
 ├── storage/              # File storage (uploads, logs)
 │
-└── views/               # Template HTML + CSS (Bootstrap/Tailwind)
-    ├── auth/             # Halaman autentikasi
-    ├── dashboard/        # Halaman admin dashboard
-    ├── layouts/          # Template layout (header, sidebar, footer)
-    ├── obat/             # View manajemen obat
-    └── ...
+├── views/
+│   ├── admin/
+│   │   ├── dashboard/    # Halaman admin dashboard
+│   │   ├── obat/         # View manajemen obat
+│   │   └── pasien/       # View manajemen pasien
+│   ├── auth/             # Halaman autentikasi
+│   └── layouts/          # Template layout (header, sidebar, footer)
+│
+├── composer.json          # PHP dependencies
+├── .htaccess              # Root URL rewriting
+└── index.php              # Root entry point
 ```
+
+### Fitur Tambahan
+
+- **Flash Messages** - Notifikasi sukses/error menggunakan `php-flasher`
+- **URL Rewriting** - Clean URL dengan `.htaccess`
+- **Environment Config** - Konfigurasi via `.env` menggunakan `vlucas/phpdotenv`
 
 ### Alur Kerja (Request Lifecycle)
 
@@ -103,7 +117,7 @@ User Request
        │
        ▼
 ┌─────────────┐
-│  Database    │  MySQL
+│  Database   │  MySQL
 └─────────────┘
 ```
 
@@ -115,8 +129,12 @@ User Request
 |-----------|-----------|-------|
 | **PHP** | Server-side scripting | 8.1+ |
 | **MySQL** | Relational database | 8.0+ |
-| **Bootstrap** | Frontend CSS Framework | 5.3 |
+| **Tailwind CSS** | Frontend CSS Framework | 4.x |
+| **jQuery** | JavaScript Library | 3.7.1 |
 | **Composer** | Dependency management | 2.x |
+| **vlucas/phpdotenv** | Environment variable management | ^5.6 |
+| **php-flasher/flasher** | Flash notification library | latest |
+| **psr/container** | Container interface | ^2.0 |
 | **Apache/Nginx** | Web server | Latest |
 
 ---
@@ -145,25 +163,27 @@ User Request
    CREATE DATABASE meddesa_db;
    ```
 
-3. **Import SQL Schema**
+3. **Install Dependencies**
+   ```bash
+   composer install
+   ```
+
+4. **Import SQL Schema**
    ```bash
    mysql -u root -p meddesa_db < database/schema.sql
    ```
 
-4. **Konfigurasi Environment**
+5. **Konfigurasi Environment**
    
-   Edit file [`config/database.php`](config/database.php):
-   ```php
-   return [
-       'host'     => 'localhost',
-       'database' => 'meddesa_db',
-       'username' => 'root',
-       'password' => '',
-       'charset'  => 'utf8mb4'
-   ];
+   Copy `.env.example` ke `.env` dan edit konfigurasi database:
+   ```
+   DB_HOST=localhost
+   DB_NAME=meddesa_db
+   DB_USER=root
+   DB_PASS=
    ```
 
-5. **Jalankan Server**
+6. **Jalankan Server**
    ```bash
    # Via PHP built-in server
    php -S localhost:8000 -t public
@@ -172,9 +192,9 @@ User Request
    # Akses http://localhost/meddesa
    ```
 
-6. **Login Default**
+7. **Login Default**
    ```
-   URL: http://localhost:8000/auth/login
+   URL: http://localhost:8000/login
    Email: admin@meddesa.id
    Password: admin123
    ```
@@ -192,38 +212,53 @@ User Request
 
 **File terkait:**
 - [`app/controllers/authController.php`](app/controllers/authController.php)
-- [`app/services/authServices.php`](app/services/authServices.php)
 - [`app/core/middleware.php`](app/core/middleware.php)
 
 ### 💊 Modul Obat
 
 | Fitur | Endpoint | Method |
 |-------|----------|--------|
-| List Obat | `/obat` | GET |
-| Tambah Obat | `/obat/create` | GET/POST |
-| Edit Obat | `/obat/edit/{id}` | GET/POST |
-| Hapus Obat | `/obat/delete/{id}` | GET |
+| List Obat | `/admin/obat` | GET |
+| Tambah Obat | `/admin/obat/create` | GET/POST |
+| Edit Obat | `/admin/obat/edit/{id}` | GET/POST |
+| Hapus Obat | `/admin/obat/delete/{id}` | GET |
 
 **File terkait:**
 - [`app/controllers/obatController.php`](app/controllers/obatController.php)
 - [`app/repositories/obatRepository.php`](app/repositories/obatRepository.php)
+
+### 👥 Modul Pasien
+
+| Fitur | Endpoint | Method |
+|-------|----------|--------|
+| List Pasien | `/admin/pasien` | GET |
+| Tambah Pasien | `/admin/pasien/create` | GET/POST |
+| Detail Pasien | `/admin/pasien/detail/{id}` | GET |
+| Edit Pasien | `/admin/pasien/edit/{id}` | GET/POST |
+| Hapus Pasien | `/admin/pasien/delete/{id}` | GET |
+
+**File terkait:**
+- [`app/controllers/pasienController.php`](app/controllers/pasienController.php)
+- [`app/repositories/pasienRepository.php`](app/repositories/pasienRepository.php)
 
 ### 📋 Routes
 
 Semua route didefinisikan di [`routes/web.php`](routes/web.php):
 
 ```php
-// Public Routes
-Route::get('/', 'homeController@index');
-Route::get('/login', 'authController@loginView');
-Route::post('/login', 'authController@login');
+$router = new Router();
 
-// Protected Routes (Admin/Petugas)
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', 'dashboardController@index');
-    Route::resource('/obat', 'obatController');
-    // Tambahkan route lainnya di sini
-});
+// Public Routes
+$router->get('/', 'HomeController@index');
+$router->get('/login', 'AuthController@showLogin');
+$router->post('/login', 'AuthController@login');
+$router->get('/logout', 'AuthController@logout');
+
+// Protected Routes (Admin)
+$router->get('/admin/dashboard', 'DashboardController@index');
+$router->get('/admin/obat', 'ObatController@index');
+$router->get('/admin/pasien', 'PasienController@index');
+// Tambahkan route lainnya di sini
 ```
 
 ---
@@ -234,17 +269,20 @@ Route::group(['middleware' => 'auth'], function () {
 
 ```
 config/
-├── database.php      # Konfigurasi MySQL
-├── app.php          # Konfigurasi aplikasi (future)
-└── auth.php         # Konfigurasi auth (future)
+└── database.php      # Konfigurasi MySQL (.env supported)
 ```
+
+### Helper
+
+Helper yang tersedia di [`app/helpers/`](app/helpers/):
+
+- `flasher.php` - Flash message notifications (success, error, warning, info)
 
 ### Middleware
 
 Middleware yang tersedia di [`app/core/middleware.php`](app/core/middleware.php):
 
 - `auth` - Cek status login
-- `role` - Cek role user (admin/petugas)
 - `guest` - Redirect jika sudah login
 
 ---
@@ -263,8 +301,8 @@ Middleware yang tersedia di [`app/core/middleware.php`](app/core/middleware.php)
 │ created_at  │     └─────────────┘     └─────────────┘
 └─────────────┘            │                   │
        │                   │                   │
-       │              ┌─────┴─────┐             │
-       │              │           │             │
+       │               ┌───┴──────┐            │
+       │               │          │            │
 ┌──────┴──────┐  ┌─────┴─────┐ ┌──┴────────┐   │
 │  medical_   │  │  queues   │ │  medical  │   │
 │  records    │  │           │ │  records  │   │
@@ -276,7 +314,7 @@ Middleware yang tersedia di [`app/core/middleware.php`](app/core/middleware.php)
 │ treatment   │  │ status    │ │ treatment │   │
 │ date        │  │ date      │ │ date      │   │
 └─────────────┘  └───────────┘ └───────────┘   │
-                                           │
+                                           │   │
                                      ┌─────┴─────┐
                                      │ medicines │
                                      ├───────────┤
@@ -295,7 +333,7 @@ Middleware yang tersedia di [`app/core/middleware.php`](app/core/middleware.php)
 | Phase | Fitur | Status |
 |-------|-------|--------|
 | **Phase 1** | Core Structure & Auth | ✅ Done |
-| **Phase 2** | Manajemen Obat & Pasien | 🔄 In Progress |
+| **Phase 2** | Manajemen Obat & Pasien | ✅ Done |
 | **Phase 3** | Manajemen Dokter & Jadwal | 📋 Planned |
 | **Phase 4** | Rekam Medis & Antrian | 📋 Planned |
 | **Phase 5** | Landing Page & Artikel | 📋 Planned |
@@ -324,16 +362,18 @@ Project ini dilisensikan di bawah MIT License - lihat file [LICENSE.md](LICENSE.
 
 ## 👨‍💻 Author
 
-**MedDesa Development Team**
+**Muhamad Jaelani** (zyxevls)
 
-- GitHub: [@username](https://github.com/username)
-- Email: dev@meddesa.id
+- GitHub: [@zyxevls](https://github.com/zyxevls)
+- Email: jaelanim465@gmail.com
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Bootstrap Team for the amazing CSS framework
+- Tailwind CSS Team for the utility-first CSS framework
+- jQuery Team for the JavaScript library
+- php-flasher for flash notification support
 - PHP Community for continuous innovation
 - Indonesia Healthcare Ecosystem
 
@@ -341,5 +381,5 @@ Project ini dilisensikan di bawah MIT License - lihat file [LICENSE.md](LICENSE.
 
 <div align="center">
   <p>Made with ❤️ for Indonesian Healthcare</p>
-  <p>© 2024 MedDesa CMS - Open Source Project</p>
+  <p>© 2024-2026 MedDesa CMS - Open Source Project</p>
 </div>
