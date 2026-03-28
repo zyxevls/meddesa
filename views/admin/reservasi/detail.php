@@ -32,21 +32,21 @@
                             <p class="mt-1 text-base font-medium text-slate-800"><?= htmlspecialchars($formReservasi['no_rm'] ?? '-') ?></p>
                         </div>
                         <div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nama Pasien</p>
+                            <p class="mt-1 text-base font-medium text-slate-800"><?= htmlspecialchars($formReservasi['nama'] ?? '-') ?></p>
+                        </div>
+                        <div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">No Antrean</p>
                             <p class="mt-1 text-base font-medium text-slate-800"><?= htmlspecialchars($formReservasi['nomor_antrean'] ?? '-') ?></p>
                         </div>
                         <div>
-                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Poli Tujuan</p>
-                            <p class="mt-1 text-base font-bold text-slate-900"><?= htmlspecialchars($formReservasi['poli_tujuan'] ?? '-') ?></p>
-                        </div>
-                        <div>
-                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Tanggal Reservasi</p>
-                            <p class="mt-1 text-base font-bold text-slate-900"><?= htmlspecialchars($formReservasi['tanggal_reservasi'] ?? '-') ?></p>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Dokter</p>
+                            <p class="mt-1 text-base font-medium text-slate-800"><?= htmlspecialchars($formReservasi['nama_dokter'] ?? '-') ?></p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Profil Pasien -->
+                <!-- Status Reservasi -->
                 <div class="border-t border-slate-200 pt-7">
                     <div class="mb-4 flex items-center gap-3">
                         <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-700"><i class="fas fa-user"></i></span>
@@ -60,6 +60,14 @@
                         <div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Status Reservasi</p>
                             <p class="mt-1 text-base font-medium text-slate-800"><?= htmlspecialchars($formReservasi['status'] ?? '-') ?></p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Poli Tujuan</p>
+                            <p class="mt-1 text-base font-bold text-slate-900"><?= htmlspecialchars($formReservasi['poli_tujuan'] ?? '-') ?></p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Tanggal Reservasi</p>
+                            <p class="mt-1 text-base font-bold text-slate-900"><?= htmlspecialchars($formReservasi['tanggal_reservasi'] ?? '-') ?></p>
                         </div>
                     </div>
                 </div>

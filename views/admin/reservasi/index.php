@@ -84,7 +84,7 @@ $reservasiUmum = $totalReservasi - $reservasiBpjs;
             <h2 class="text-lg font-semibold text-slate-800">Daftar Reservasi</h2>
             <div class="relative w-full md:w-80">
                 <i class="fas fa-search pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                <input id="reservasi-search" type="text" placeholder="Cari no RM, nama, NIK, atau telepon..." class="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100">
+                <input id="reservasi-search" type="text" placeholder="Cari no RM, nama pasien, no antrean, dokter, poli, atau status..." class="w-full rounded-xl border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100">
             </div>
         </div>
 
@@ -96,8 +96,11 @@ $reservasiUmum = $totalReservasi - $reservasiBpjs;
                             <th class="px-4 py-3 text-left font-semibold">No</th>
                             <th class="px-4 py-3 text-left font-semibold">No. RM</th>
                             <th class="px-4 py-3 text-left font-semibold">Nama Pasien</th>
-                            <th class="px-4 py-3 text-left font-semibold">Jenis Kelamin</th>
-                            <th class="px-4 py-3 text-left font-semibold">Gol. Darah</th>
+                            <th class="px-4 py-3 text-left font-semibold">No. Antrean</th>
+                            <th class="px-4 py-3 text-left font-semibold">Dokter</th>
+                            <th class="px-4 py-3 text-left font-semibold">Poli Tujuan</th>
+                            <th class="px-4 py-3 text-left font-semibold">Tgl. Reservasi</th>
+                            <th class="px-4 py-3 text-left font-semibold">Status</th>
                             <th class="px-4 py-3 text-left font-semibold">BPJS</th>
                             <th class="px-4 py-3 text-center font-semibold">Aksi</th>
                         </tr>
@@ -105,7 +108,7 @@ $reservasiUmum = $totalReservasi - $reservasiBpjs;
                     <tbody id="reservasi-table-body" class="divide-y divide-slate-200 bg-white text-slate-700">
                         <?php if (empty($reservasiList)): ?>
                             <tr>
-                                <td colspan="14" class="px-4 py-8 text-center text-slate-500">Belum ada data reservasi.</td>
+                                <td colspan="10" class="px-4 py-8 text-center text-slate-500">Belum ada data reservasi.</td>
                             </tr>
                         <?php endif; ?>
 
@@ -114,8 +117,22 @@ $reservasiUmum = $totalReservasi - $reservasiBpjs;
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= $index + 1 ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['no_rm'] ?? '-')) ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nama'] ?? '-')) ?></td>
-                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['jenis_kelamin'] ?? '-')) ?></td>
-                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['golongan_darah'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nomor_antrean'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nama_dokter'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['poli_tujuan'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['tanggal_reservasi'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800">
+                                    <?php $status = (string) ($item['status'] ?? '-'); ?>
+                                    <?php if ($status === 'Selesai'): ?>
+                                        <span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800"><?= htmlspecialchars($status) ?></span>
+                                    <?php elseif ($status === 'Diperiksa'): ?>
+                                        <span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800"><?= htmlspecialchars($status) ?></span>
+                                    <?php elseif ($status === 'Batal'): ?>
+                                        <span class="inline-flex items-center rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-medium text-rose-800"><?= htmlspecialchars($status) ?></span>
+                                    <?php else: ?>
+                                        <span class="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800"><?= htmlspecialchars($status) ?></span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?php if ($item['no_bpjs'] != null) { ?>
                                         <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
                                             <i class="fas fa-check mr-1"></i> Ya
@@ -175,12 +192,9 @@ $reservasiUmum = $totalReservasi - $reservasiBpjs;
             });
         });
 
-        const toast = document.getQuerySelector('.handle-toast');
-        if (toast)
-
-            if (!searchInput || !tableBody) {
-                return;
-            }
+        if (!searchInput || !tableBody) {
+            return;
+        }
 
         searchInput.addEventListener('input', function() {
             const keyword = this.value.trim().toLowerCase();
@@ -196,7 +210,10 @@ $reservasiUmum = $totalReservasi - $reservasiBpjs;
                     cells[0]?.textContent || '',
                     cells[1]?.textContent || '',
                     cells[2]?.textContent || '',
-                    cells[6]?.textContent || ''
+                    cells[3]?.textContent || '',
+                    cells[4]?.textContent || '',
+                    cells[5]?.textContent || '',
+                    cells[7]?.textContent || ''
                 ].join(' ').toLowerCase();
 
                 const visible = searchText.includes(keyword);

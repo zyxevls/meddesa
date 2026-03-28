@@ -12,9 +12,10 @@ class ReservasiRepository
     public function all()
     {
         return $this->db->query("
-            SELECT reservasi.*, pasien.nama, pasien.no_rm, pasien.jenis_kelamin, pasien.golongan_darah, pasien.no_bpjs
+            SELECT reservasi.*, pasien.nama, pasien.no_rm, pasien.jenis_kelamin, pasien.golongan_darah, pasien.no_bpjs, dokter.nama_dokter
             FROM reservasi 
-            LEFT JOIN pasien ON reservasi.pasien_id = pasien.id 
+            LEFT JOIN pasien ON reservasi.pasien_id = pasien.id
+            LEFT JOIN dokter ON reservasi.dokter_id = dokter.id
             ORDER BY reservasi.created_at DESC
         ")->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -22,28 +23,29 @@ class ReservasiRepository
     public function find($id)
     {
         $stmt = $this->db->prepare("
-            SELECT reservasi.*, pasien.nama, pasien.no_rm, pasien.jenis_kelamin, pasien.golongan_darah, pasien.no_bpjs
+            SELECT reservasi.*, pasien.nama, pasien.no_rm, pasien.jenis_kelamin, pasien.golongan_darah, pasien.no_bpjs, dokter.nama_dokter
             FROM reservasi 
             LEFT JOIN pasien ON reservasi.pasien_id = pasien.id 
+            LEFT JOIN dokter ON reservasi.dokter_id = dokter.id
             WHERE reservasi.id = ?
         ");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create($pasien_id, $nomor_antrean, $poli_tujuan, $tanggal_reservasi, $keluhan, $status)
+    public function create($pasien_id, $nomor_antrean, $dokter_id, $poli_tujuan, $tanggal_reservasi, $keluhan, $status)
     {
         $stmt = $this->db->prepare(
-            "INSERT INTO reservasi (pasien_id, nomor_antrean, poli_tujuan, tanggal_reservasi, keluhan, status)
-                VALUES (?, ?, ?, ?, ?, ?)"
+            "INSERT INTO reservasi (pasien_id, nomor_antrean, dokter_id, poli_tujuan, tanggal_reservasi, keluhan, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?)"
         );
-        $stmt->execute([$pasien_id, $nomor_antrean, $poli_tujuan, $tanggal_reservasi, $keluhan, $status]);
+        $stmt->execute([$pasien_id, $nomor_antrean, $dokter_id, $poli_tujuan, $tanggal_reservasi, $keluhan, $status]);
     }
 
     public function update($id, $data)
     {
         $stmt = $this->db->prepare(
-            "UPDATE reservasi SET pasien_id=?, nomor_antrean=?, poli_tujuan=?, tanggal_reservasi=?, keluhan=?, status=? WHERE id=?"
+            "UPDATE reservasi SET pasien_id=?, nomor_antrean=?, dokter_id=?, poli_tujuan=?, tanggal_reservasi=?, keluhan=?, status=? WHERE id=?"
         );
         $stmt->execute([...$data, $id]);
     }

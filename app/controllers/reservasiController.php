@@ -23,6 +23,7 @@ class ReservasiController
         Middleware::auth();
         $pasienRepo = new PasienRepository(Database::connect());
         $pasiens = $pasienRepo->all();
+        $dokters = $this->getDokters();
 
         $content = BASE_PATH . '/views/admin/reservasi/create.php';
         require BASE_PATH . '/views/layouts/app.php';
@@ -32,9 +33,17 @@ class ReservasiController
     {
         Middleware::auth();
 
+        $dokterId = $_POST['dokter_id'] ?? null;
+        if (empty($dokterId)) {
+            flash()->error('Dokter wajib dipilih.');
+            header('Location: /admin/reservasi/create');
+            exit;
+        }
+
         $this->repo->create(
             $_POST['pasien_id'],
             $_POST['nomor_antrean'],
+            $dokterId,
             $_POST['poli_tujuan'],
             $_POST['tanggal_reservasi'],
             $_POST['keluhan'],
@@ -53,6 +62,7 @@ class ReservasiController
         $reservasi = $this->repo->find($id);
         $pasienRepo = new PasienRepository(Database::connect());
         $pasiens = $pasienRepo->all();
+        $dokters = $this->getDokters();
 
         $content = BASE_PATH . '/views/admin/reservasi/edit.php';
 
@@ -63,9 +73,19 @@ class ReservasiController
     {
         Middleware::auth();
 
+        $existing = $this->repo->find($id);
+        $dokterId = $_POST['dokter_id'] ?? ($existing['dokter_id'] ?? null);
+
+        if (empty($dokterId)) {
+            flash()->error('Dokter wajib dipilih.');
+            header('Location: /admin/reservasi/edit/' . $id);
+            exit;
+        }
+
         $this->repo->update($id, [
             $_POST['pasien_id'],
             $_POST['nomor_antrean'],
+            $dokterId,
             $_POST['poli_tujuan'],
             $_POST['tanggal_reservasi'],
             $_POST['keluhan'],
@@ -101,5 +121,15 @@ class ReservasiController
     public function delete($id)
     {
         $this->destroy($id);
+    }
+
+    private function getDokters()
+    {
+        try {
+            $stmt = Database::connect()->query('SELECT id, nip, sip, nama_dokter, spesialisasi FROM dokter ORDER BY nama_dokter ASC');
+            return $stmt ? $stmt->fetchAll(PDO::FETCH_ASSOC) : [];
+        } catch (Throwable $e) {
+            return [];
+        }
     }
 }
