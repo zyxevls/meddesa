@@ -76,9 +76,9 @@
                                 <option value="-">-</option>
                             </select>
                         </div>
-                        <div class="mt-4">
+                        <div class="mt-4 col-span-4">
                             <label for="alamat" class="mb-2 block text-sm font-semibold text-slate-700">Alamat</label>
-                            <input id="alamat" name="alamat" type="text" required placeholder="Contoh: Jl. Merdeka No. 123, RT 01/RW 02" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
+                            <textarea id="alamat" name="alamat" type="text" required placeholder="Contoh: Jl. Merdeka No. 123, RT 01/RW 02" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100"></textarea>
                         </div>
                     </div>
                 </div>

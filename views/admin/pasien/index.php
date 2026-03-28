@@ -1,8 +1,10 @@
-﻿<?php
+<?php
 $pasienList = $pasiens ?? [];
 $totalPasien = count($pasienList);
 $pasienPria = count(array_filter($pasienList, static fn($item) => ($item['jenis_kelamin'] ?? '') === 'Laki-laki'));
 $pasienPerempuan = count(array_filter($pasienList, static fn($item) => ($item['jenis_kelamin'] ?? '') === 'Perempuan'));
+$pasienBpjs = count(array_filter($pasienList, static fn($item) => !empty($item['no_bpjs'])));
+$pasienUmum = $totalPasien - $pasienBpjs;
 ?>
 
 <section class="space-y-6">
@@ -24,18 +26,56 @@ $pasienPerempuan = count(array_filter($pasienList, static fn($item) => ($item['j
         </div>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-3">
-        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Total Pasien</p>
-            <p class="mt-3 text-3xl font-semibold text-slate-800"><?= number_format($totalPasien, 0, ',', '.') ?></p>
+    <!-- Mini Dashboard -->
+    <div class="flex flex-wrap gap-4">
+        <article class="flex flex-1 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md min-w-[180px]">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <i class="fas fa-users"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Pasien</p>
+                <p class="text-xl font-bold text-slate-800"><?= number_format($totalPasien, 0, ',', '.') ?></p>
+            </div>
         </article>
-        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Pasien Laki-laki</p>
-            <p class="mt-3 text-3xl font-semibold text-slate-800"><?= number_format($pasienPria, 0, ',', '.') ?></p>
+
+        <article class="flex flex-1 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md min-w-[180px]">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+                <i class="fas fa-mars"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Laki-laki</p>
+                <p class="text-xl font-bold text-slate-800"><?= number_format($pasienPria, 0, ',', '.') ?></p>
+            </div>
         </article>
-        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Pasien Perempuan</p>
-            <p class="mt-3 text-3xl font-semibold text-slate-800"><?= number_format($pasienPerempuan, 0, ',', '.') ?></p>
+
+        <article class="flex flex-1 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md min-w-[180px]">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
+                <i class="fas fa-venus"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Perempuan</p>
+                <p class="text-xl font-bold text-slate-800"><?= number_format($pasienPerempuan, 0, ',', '.') ?></p>
+            </div>
+        </article>
+
+        <article class="flex flex-1 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md min-w-[180px]">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                <i class="fas fa-id-card-clip"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pasien BPJS</p>
+                <p class="text-xl font-bold text-slate-800"><?= number_format($pasienBpjs, 0, ',', '.') ?></p>
+            </div>
+        </article>
+
+        <article class="flex flex-1 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md min-w-[180px]">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
+                <i class="fas fa-user-tag"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pasien Umum</p>
+                <p class="text-xl font-bold text-slate-800"><?= number_format($pasienUmum, 0, ',', '.') ?></p>
+            </div>
         </article>
     </div>
 
@@ -58,7 +98,8 @@ $pasienPerempuan = count(array_filter($pasienList, static fn($item) => ($item['j
                             <th class="px-4 py-3 text-left font-semibold">Nama Pasien</th>
                             <th class="px-4 py-3 text-left font-semibold">Jenis Kelamin</th>
                             <th class="px-4 py-3 text-left font-semibold">Gol. Darah</th>
-                            <th class="px-4 py-3 text-left font-semibold">Aksi</th>
+                            <th class="px-4 py-3 text-left font-semibold">BPJS</th>
+                            <th class="px-4 py-3 text-center font-semibold">Aksi</th>
                         </tr>
                     </thead>
                     <tbody id="pasien-table-body" class="divide-y divide-slate-200 bg-white text-slate-700">
@@ -68,18 +109,34 @@ $pasienPerempuan = count(array_filter($pasienList, static fn($item) => ($item['j
                             </tr>
                         <?php endif; ?>
 
-                        <?php foreach ($pasienList as $item): ?>
+                        <?php foreach ($pasienList as $index => $item): ?>
                             <tr class="transition hover:bg-blue-50/40">
-                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['id'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= $index + 1 ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['no_rm'] ?? '-')) ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nama'] ?? '-')) ?></td>
-                                <td class="px-4 py-3"><?= htmlspecialchars((string) ($item['jenis_kelamin'] ?? '-')) ?></td>
-                                <td class="px-4 py-3"><?= htmlspecialchars((string) ($item['golongan_darah'] ?? '-')) ?></td>
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center gap-2">
-                                        <a href="/admin/pasien/detail/<?= urlencode((string) ($item['id'] ?? '')) ?>" class="inline-flex items-center rounded-lg bg-blue-100 px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-200">Detail</a>
-                                        <a href="/admin/pasien/edit/<?= urlencode((string) ($item['id'] ?? '')) ?>" class="inline-flex items-center rounded-lg bg-amber-100 px-3 py-1.5 text-xs font-semibold text-amber-700 hover:bg-amber-200">Edit</a>
-                                        <a href="/admin/pasien/delete/<?= urlencode((string) ($item['id'] ?? '')) ?>" class="inline-flex items-center rounded-lg bg-rose-100 px-3 py-1.5 text-xs font-semibold text-rose-700 hover:bg-rose-200 handle-swal">Hapus</a>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['jenis_kelamin'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['golongan_darah'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?php if ($item['no_bpjs'] != null) { ?>
+                                        <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">
+                                            <i class="fas fa-check mr-1"></i> Ya
+                                        </span>
+                                    <?php } else { ?>
+                                        <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+                                            <i class="fas fa-times mr-1"></i> Tidak
+                                        </span>
+                                    <?php } ?>
+                                </td>
+                                <td class="px-4 py-3 font-medium text-slate-800">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <a href="/admin/pasien/detail/<?= $item['id'] ?>" title="Lihat Detail" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-teal-200 bg-teal-50 text-teal-600 transition hover:bg-teal-100" title="Detail">
+                                            <i class="fas fa-eye text-xs"></i>
+                                        </a>
+                                        <a href="/admin/pasien/edit/<?= $item['id'] ?>" title="Edit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-blue-200 bg-blue-50 text-blue-600 transition hover:bg-blue-100" title="Edit">
+                                            <i class="fas fa-pen text-xs"></i>
+                                        </a>
+                                        <a href="/admin/pasien/delete/<?= $item['id'] ?>" title="Hapus" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-200 bg-red-50 text-red-600 transition hover:bg-red-100 handle-swal" title="Hapus">
+                                            <i class="fas fa-trash text-xs"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

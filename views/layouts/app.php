@@ -10,8 +10,8 @@
         echo $bc->toJsonLD();
         ?>
         <?php if (count($bcItems) > 0): ?>
-            <nav class="mb-4 text-sm" aria-label="Breadcrumb">
-                <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-slate-500">
+            <nav class="sticky top-20 z-40 -mx-8 mb-6 border-b border-slate-200/40 bg-slate-50/80 px-8 py-3 backdrop-blur-md" aria-label="Breadcrumb">
+                <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
                     <?php foreach ($bcItems as $i => $item): ?>
                         <?php $isLast = ($i + 1 === count($bcItems)); ?>
                         <?php if ($i > 0): ?>
@@ -21,13 +21,13 @@
                         <?php endif; ?>
                         <li class="flex items-center">
                             <?php if ($isLast): ?>
-                                <span class="font-semibold text-slate-700"><?= htmlspecialchars($item['title']) ?></span>
+                                <span class="font-bold text-slate-700"><?= htmlspecialchars($item['title']) ?></span>
                             <?php elseif ($i === 0): ?>
-                                <a href="<?= htmlspecialchars($item['link']) ?>" class="hover:text-blue-600 transition" title="<?= htmlspecialchars($item['title']) ?>">
+                                <a href="<?= htmlspecialchars($item['link']) ?>" class="text-slate-500 transition hover:text-blue-600" title="<?= htmlspecialchars($item['title']) ?>">
                                     <i class="fas fa-home"></i>
                                 </a>
                             <?php else: ?>
-                                <a href="<?= htmlspecialchars($item['link']) ?>" class="hover:text-blue-600 transition"><?= htmlspecialchars($item['title']) ?></a>
+                                <a href="<?= htmlspecialchars($item['link']) ?>" class="text-slate-500 transition hover:text-blue-600"><?= htmlspecialchars($item['title']) ?></a>
                             <?php endif; ?>
                         </li>
                     <?php endforeach; ?>

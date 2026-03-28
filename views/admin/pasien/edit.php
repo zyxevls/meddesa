@@ -8,18 +8,18 @@
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-100">Registrasi Pasien</p>
                 <h1 class="mt-1 text-3xl font-bold leading-tight md:text-4xl">Edit Data Pasien</h1>
-                <p class="mt-2 max-w-2xl text-sm text-blue-100 md:text-base">Isi formulir berikut untuk mengedit data pasien di sistem pelayanan klinik.</p>
+                <p class="mt-2 max-w-2xl text-sm text-blue-100 md:text-base">Gunakan formulir ini untuk melakukan pembaruan data pasien yang valid ke sistem.</p>
             </div>
             <a href="/admin/pasien" class="inline-flex items-center gap-2 self-start rounded-xl border border-white/40 bg-white/15 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/25 md:self-auto">
                 <i class="fas fa-arrow-left"></i>
-                Kembali ke Daftar
+                Kembali
             </a>
         </div>
     </div>
 
     <div class="grid gap-6 xl:grid-cols-[3fr_1fr]">
         <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-            <form method="POST" action="/admin/pasien/<?= $formPasien['id'] ?? '' ?>/update" class="space-y-8">
+            <form method="POST" action="/admin/pasien/update/<?= $formPasien['id'] ?? '' ?>" class="space-y-8">
                 <div>
                     <div class="mb-4 flex items-center gap-3">
                         <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-100 text-cyan-700"><i class="fas fa-id-card"></i></span>
@@ -31,12 +31,12 @@
                             <input id="no_rm" name="no_rm" type="text" value="<?= htmlspecialchars($formPasien['no_rm'] ?? '') ?>" required placeholder="Contoh: RM-2026-001" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
                         </div>
                         <div>
-                            <label for="nik" class="mb-2 block text-sm font-semibold text-slate-700">NIK</label>
+                            <label for="nik" class="mb-2 block text-sm font-semibold text-slate-700">NIK (KTP)</label>
                             <input id="nik" name="nik" type="text" value="<?= htmlspecialchars($formPasien['nik'] ?? '') ?>" required placeholder="Contoh: 3201XXXXXXXXXXXX" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
                         </div>
                         <div>
-                            <label for="no_bpjs" class="mb-2 block text-sm font-semibold text-slate-700">No BPJS</label>
-                            <input id="no_bpjs" name="no_bpjs" type="text" value="<?= htmlspecialchars($formPasien['no_bpjs'] ?? '') ?>" required placeholder="Contoh: 0001234567890" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
+                            <label for="no_bpjs" class="mb-2 block text-sm font-semibold text-slate-700">No BPJS (Opsional)</label>
+                            <input id="no_bpjs" name="no_bpjs" type="text" value="<?= htmlspecialchars($formPasien['no_bpjs'] ?? '') ?>" placeholder="Kosongkan jika Umum" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
                         </div>
                         <div>
                             <label for="nama" class="mb-2 block text-sm font-semibold text-slate-700">Nama Lengkap</label>
@@ -47,8 +47,8 @@
 
                 <div class="border-t border-slate-200 pt-7">
                     <div class="mb-4 flex items-center gap-3">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-700"><i class="fas fa-user"></i></span>
-                        <h2 class="text-lg font-semibold text-slate-800">Profil Pasien</h2>
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-700"><i class="fas fa-user-circle"></i></span>
+                        <h2 class="text-lg font-semibold text-slate-800">Profil & Personal</h2>
                     </div>
                     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                         <div>
@@ -68,33 +68,46 @@
                             </select>
                         </div>
                         <div>
-                            <label for="golongan_darah" class="mb-2 block text-sm font-semibold text-slate-700">Golongan Darah</label>
-                            <input id="golongan_darah" name="golongan_darah" type="text" value="<?= htmlspecialchars($formPasien['golongan_darah'] ?? '') ?>" required placeholder="Contoh: A / B / AB / O" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <label for="alamat" class="mb-2 block text-sm font-semibold text-slate-700">Alamat</label>
-                        <input id="alamat" name="alamat" type="text" value="<?= htmlspecialchars($formPasien['alamat'] ?? '') ?>" required placeholder="Contoh: Jl. Merdeka No. 123, RT 01/RW 02" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
-                    </div>
-                </div>
-
-                <div class="border-t border-slate-200 pt-7">
-                    <div class="mb-4 flex items-center gap-3">
-                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700"><i class="fas fa-file-medical"></i></span>
-                        <h2 class="text-lg font-semibold text-slate-800">Kontak dan Administrasi</h2>
-                    </div>
-                    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                        <div>
-                            <label for="no_telephone" class="mb-2 block text-sm font-semibold text-slate-700">No Telephone</label>
-                            <input id="no_telephone" name="no_telephone" type="text" value="<?= htmlspecialchars($formPasien['no_telephone'] ?? '') ?>" required placeholder="Contoh: 081234567890" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
+                            <label for="golongan_darah" class="mb-2 block text-sm font-semibold text-slate-700">Gol. Darah</label>
+                            <select id="golongan_darah" name="golongan_darah" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
+                                <option value="">Pilih Golongan Darah</option>
+                                <option value="A" <?= ($formPasien['golongan_darah'] ?? '') === 'A' ? 'selected' : '' ?>>A</option>
+                                <option value="B" <?= ($formPasien['golongan_darah'] ?? '') === 'B' ? 'selected' : '' ?>>B</option>
+                                <option value="AB" <?= ($formPasien['golongan_darah'] ?? '') === 'AB' ? 'selected' : '' ?>>AB</option>
+                                <option value="O" <?= ($formPasien['golongan_darah'] ?? '') === 'O' ? 'selected' : '' ?>>O</option>
+                                <option value="-" <?= ($formPasien['golongan_darah'] ?? '') === '-' ? 'selected' : '' ?>>-</option>
+                            </select>
                         </div>
                         <div>
                             <label for="pekerjaan" class="mb-2 block text-sm font-semibold text-slate-700">Pekerjaan</label>
                             <input id="pekerjaan" name="pekerjaan" type="text" value="<?= htmlspecialchars($formPasien['pekerjaan'] ?? '') ?>" required placeholder="Contoh: Petani" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
                         </div>
                         <div>
-                            <label for="status_perkawinan" class="mb-2 block text-sm font-semibold text-slate-700">Status Perkawinan</label>
-                            <input id="status_perkawinan" name="status_perkawinan" type="text" value="<?= htmlspecialchars($formPasien['status_perkawinan'] ?? '') ?>" required placeholder="Contoh: Menikah" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
+                            <label for="status_perkawinan" class="mb-2 block text-sm font-semibold text-slate-700">Status</label>
+                            <select id="status_perkawinan" name="status_perkawinan" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
+                                <option value="">Pilih Status Perkawinan</option>
+                                <option value="Belum Kawin" <?= ($formPasien['status_perkawinan'] ?? '') === 'Belum Kawin' ? 'selected' : '' ?>>Belum Kawin</option>
+                                <option value="Kawin" <?= ($formPasien['status_perkawinan'] ?? '') === 'Kawin' ? 'selected' : '' ?>>Kawin</option>
+                                <option value="Cerai Hidup" <?= ($formPasien['status_perkawinan'] ?? '') === 'Cerai Hidup' ? 'selected' : '' ?>>Cerai Hidup</option>
+                                <option value="Cerai Mati" <?= ($formPasien['status_perkawinan'] ?? '') === 'Cerai Mati' ? 'selected' : '' ?>>Cerai Mati</option>
+                            </select>
+                        </div>
+                        <div class="col-span-2">
+                            <label for="alamat" class="mb-2 block text-sm font-semibold text-slate-700">Alamat Lengkap</label>
+                            <textarea id="alamat" name="alamat" type="text" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100"><?= htmlspecialchars($formPasien['alamat'] ?? '') ?></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 pt-7">
+                    <div class="mb-4 flex items-center gap-3">
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-100 text-indigo-700"><i class="fas fa-file-invoice"></i></span>
+                        <h2 class="text-lg font-semibold text-slate-800">Kontak & Administrasi</h2>
+                    </div>
+                    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                        <div>
+                            <label for="no_telephone" class="mb-2 block text-sm font-semibold text-slate-700">No Telephone</label>
+                            <input id="no_telephone" name="no_telephone" type="text" value="<?= htmlspecialchars($formPasien['no_telephone'] ?? '') ?>" required placeholder="Contoh: 081234567890" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-slate-700 outline-none transition focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-100">
                         </div>
                         <div>
                             <label for="no_kk" class="mb-2 block text-sm font-semibold text-slate-700">No. Kartu Keluarga</label>
@@ -105,9 +118,9 @@
 
                 <div class="flex flex-col gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:justify-end">
                     <a href="/admin/pasien" class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">Batal</a>
-                    <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-blue-700 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-200 transition hover:-translate-y-0.5 cursor-pointer handle-toast">
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-600 to-blue-700 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-100 transition hover:-translate-y-0.5 cursor-pointer">
                         <i class="fas fa-save"></i>
-                        Perbarui Data Pasien
+                        Simpan Perubahan
                     </button>
                 </div>
             </form>
@@ -115,21 +128,21 @@
 
         <aside class="space-y-4">
             <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                <h3 class="text-base font-semibold text-slate-800">Panduan Singkat</h3>
+                <h3 class="text-base font-semibold text-slate-800">Panduan Edit</h3>
                 <p class="mt-2 text-sm text-slate-600">Pastikan NIK, BPJS, dan nomor rekam medis sudah benar untuk mencegah duplikasi data.</p>
                 <div class="mt-4 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
                     <p class="font-semibold text-slate-800">Checklist:</p>
                     <ul class="mt-2 space-y-1">
-                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-emerald-500"></i><span>Isi semua field wajib.</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-emerald-500"></i><span>Nomor telepon aktif.</span></li>
-                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-emerald-500"></i><span>Alamat ditulis lengkap.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-emerald-500"></i><span>Cek validitas NIK/BPJS.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-emerald-500"></i><span>Update nomor telepon aktif.</span></li>
+                        <li class="flex items-start gap-2"><i class="fas fa-check-circle mt-1 text-emerald-500"></i><span>Verifikasi alamat terbaru.</span></li>
                     </ul>
                 </div>
             </div>
 
             <div class="rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50 to-blue-50 p-5 shadow-sm">
-                <p class="text-sm font-semibold uppercase tracking-wider text-cyan-800">Tips Input Cepat</p>
-                <p class="mt-2 text-sm text-slate-700">Gunakan format konsisten untuk memudahkan pencarian data pasien di halaman index.</p>
+                <p class="text-sm font-semibold uppercase tracking-wider text-cyan-800">Pembaruan Sistem</p>
+                <p class="mt-2 text-sm text-slate-700">Setiap perubahan data pasien akan tercatat di log aktivitas sistem MedDesa.</p>
             </div>
         </aside>
     </div>

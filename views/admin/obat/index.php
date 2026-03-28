@@ -106,36 +106,36 @@
                     <tbody id="obat-table-body" class="divide-y divide-slate-200 bg-white text-slate-700">
                         <?php if (empty($obats)): ?>
                             <tr>
-                                <td colspan="4" class="px-4 py-8 text-center text-slate-500">Belum ada data obat.</td>
+                                <td colspan="9" class="px-4 py-8 text-center text-slate-500">Belum ada data obat.</td>
                             </tr>
                         <?php endif; ?>
 
-                        <?php foreach ($obats as $index => $obat): ?>
+                        <?php foreach ($obats as $index => $item): ?>
                             <tr class="transition hover:bg-blue-50/40">
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= $index + 1 ?></td>
-                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars($obat['kode_obat'] ?? '') ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars($item['kode_obat'] ?? '') ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800">
                                     <div class="flex flex-col">
-                                        <span class="font-bold text-slate-900"><?= htmlspecialchars($obat['nama'] ?? '') ?></span>
+                                        <span class="font-bold text-slate-900"><?= htmlspecialchars($item['nama'] ?? '') ?></span>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex flex-col">
-                                        <span class="font-semibold text-slate-800"><?= htmlspecialchars($obat['kategori'] ?? '') ?></span>
+                                        <span class="font-semibold text-slate-800"><?= htmlspecialchars($item['kategori'] ?? '') ?></span>
                                     </div>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex flex-col">
-                                        <span class="font-semibold text-slate-800"><?= number_format($obat['stok'] ?? 0, 0, ',', '.') ?></span>
-                                        <?php if (($obat['stok'] ?? 0) <= 10): ?>
+                                        <span class="font-semibold text-slate-800"><?= number_format($item['stok'] ?? 0, 0, ',', '.') ?></span>
+                                        <?php if (($item['stok'] ?? 0) <= 10): ?>
                                             <span class="text-[10px] font-bold uppercase text-rose-600">Re-stock!</span>
                                         <?php endif; ?>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 font-medium text-slate-800">Rp <?= number_format($obat['harga'] ?? 0, 0, ',', '.') ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800">Rp <?= number_format($item['harga'] ?? 0, 0, ',', '.') ?></td>
                                 <td class="px-4 py-3">
                                     <?php
-                                    $expiryDate = new DateTime($obat['tanggal_expired'] ?? 'now');
+                                    $expiryDate = new DateTime($item['tanggal_expired'] ?? 'now');
                                     $today = new DateTime();
                                     $diff = $today->diff($expiryDate);
                                     $isExpired = $expiryDate < $today;
@@ -143,7 +143,7 @@
                                     ?>
                                     <div class="flex flex-col leading-tight">
                                         <span class="<?= $isExpired ? 'text-red-600 font-bold' : ($isSoon ? 'text-amber-600 font-semibold' : 'text-slate-700') ?>">
-                                            <?= date('d/m/Y', strtotime($obat['tanggal_expired'] ?? 'now')) ?>
+                                            <?= date('d/m/Y', strtotime($item['tanggal_expired'] ?? 'now')) ?>
                                         </span>
                                         <?php if ($isExpired): ?>
                                             <span class="text-[10px] font-bold uppercase text-red-600">Expired!</span>
@@ -154,18 +154,18 @@
                                 </td>
                                 <td class="px-4 py-3">
                                     <span class="rounded-lg bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
-                                        <?= htmlspecialchars($obat['rak_penyimpanan'] ?? '-') ?>
+                                        <?= htmlspecialchars($item['rak_penyimpanan'] ?? '-') ?>
                                     </span>
                                 </td>
                                 <td class="px-4 py-3">
                                     <div class="flex items-center justify-center gap-2">
-                                        <a href="/admin/obat/detail/<?= $obat['id'] ?>" title="Lihat Detail" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-teal-200 bg-teal-50 text-teal-600 transition hover:bg-teal-100" title="Detail">
+                                        <a href="/admin/obat/detail/<?= $item['id'] ?>" title="Lihat Detail" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-teal-200 bg-teal-50 text-teal-600 transition hover:bg-teal-100" title="Detail">
                                             <i class="fas fa-eye text-xs"></i>
                                         </a>
-                                        <a href="/admin/obat/edit/<?= $obat['id'] ?>" title="Edit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-blue-200 bg-blue-50 text-blue-600 transition hover:bg-blue-100" title="Edit">
+                                        <a href="/admin/obat/edit/<?= $item['id'] ?>" title="Edit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-blue-200 bg-blue-50 text-blue-600 transition hover:bg-blue-100" title="Edit">
                                             <i class="fas fa-pen text-xs"></i>
                                         </a>
-                                        <a href="/admin/obat/delete/<?= $obat['id'] ?>" title="Hapus" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-200 bg-red-50 text-red-600 transition hover:bg-red-100 handle-swal" title="Hapus">
+                                        <a href="/admin/obat/delete/<?= $item['id'] ?>" title="Hapus" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-200 bg-red-50 text-red-600 transition hover:bg-red-100 handle-swal" title="Hapus">
                                             <i class="fas fa-trash text-xs"></i>
                                         </a>
                                     </div>

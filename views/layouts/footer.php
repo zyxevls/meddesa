@@ -109,6 +109,7 @@
             }
 
             function renderPage(path, html, shouldPushState) {
+                window.scrollTo(0, 0);
                 $contentRoot.html(html);
                 runScriptsInContent();
                 updateActiveSidebar(path);
@@ -118,11 +119,6 @@
                         path: path
                     }, '', path);
                 }
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
             }
 
             function fetchAndRender(path, shouldPushState) {
