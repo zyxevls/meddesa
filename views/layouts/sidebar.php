@@ -17,6 +17,12 @@
                 </a>
             </li>
             <li>
+                <a href="/admin/reservasi" data-nav-prefix="/admin/reservasi" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200 group">
+                    <i class="fas fa-calendar-check w-5 flex-shrink-0 group-hover:text-blue-400"></i>
+                    <span class="font-medium">Reservasi</span>
+                </a>
+            </li>
+            <li>
                 <a href="/admin/obat" data-nav-prefix="/admin/obat" class="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 group <?= strpos($currentPath, '/admin/obat') === 0 ? 'bg-blue-600/90 text-white shadow-lg shadow-blue-900/25' : 'text-slate-300 hover:bg-slate-700 hover:text-white' ?>">
                     <i class="fas fa-pills w-5 flex-shrink-0 group-hover:text-blue-400"></i>
                     <span class="font-medium">Obat</span>

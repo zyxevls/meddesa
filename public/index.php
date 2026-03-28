@@ -11,13 +11,17 @@ session_start();
 require_once __DIR__ . '/../app/core/router.php';
 require_once __DIR__ . '/../app/core/middleware.php';
 require_once __DIR__ . '/../app/services/authServices.php';
+//controller
 require_once __DIR__ . '/../app/controllers/homeController.php';
 require_once __DIR__ . '/../app/controllers/authController.php';
 require_once __DIR__ . '/../app/controllers/dashboardController.php';
 require_once __DIR__ . '/../app/controllers/obatController.php';
 require_once __DIR__ . '/../app/controllers/pasienController.php';
+require_once __DIR__ . '/../app/controllers/reservasiController.php';
+//repository
 require_once __DIR__ . '/../app/repositories/obatRepository.php';
 require_once __DIR__ . '/../app/repositories/pasienRepository.php';
+require_once __DIR__ . '/../app/repositories/reservasiRepository.php';
 require_once __DIR__ . '/../config/database.php';
 
 bootstrapFlasher();

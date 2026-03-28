@@ -25,3 +25,12 @@ $router->get('/admin/pasien/edit/{id}', 'PasienController@edit');
 $router->post('/admin/pasien/update/{id}', 'PasienController@update');
 $router->get('/admin/pasien/detail/{id}', 'PasienController@detail');
 $router->get('/admin/pasien/delete/{id}', 'PasienController@destroy');
+
+//reservasi
+$router->get('/admin/reservasi', 'ReservasiController@index');
+$router->get('/admin/reservasi/create', 'ReservasiController@create');
+$router->post('/admin/reservasi/store', 'ReservasiController@store');
+$router->get('/admin/reservasi/edit/{id}', 'ReservasiController@edit');
+$router->post('/admin/reservasi/update/{id}', 'ReservasiController@update');
+$router->get('/admin/reservasi/detail/{id}', 'ReservasiController@detail');
+$router->get('/admin/reservasi/delete/{id}', 'ReservasiController@destroy');
