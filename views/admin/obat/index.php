@@ -1,14 +1,5 @@
-﻿<?php
-$totalJenis = count($obats ?? []);
-$totalStok = 0;
-$totalNilai = 0;
+<?php
 
-foreach ($obats ?? [] as $item) {
-    $stok = (int) ($item['stok'] ?? 0);
-    $harga = (int) ($item['harga'] ?? 0);
-    $totalStok += $stok;
-    $totalNilai += ($stok * $harga);
-}
 ?>
 
 <section class="space-y-6">
@@ -30,18 +21,60 @@ foreach ($obats ?? [] as $item) {
         </div>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-3">
-        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Jenis Obat</p>
-            <p class="mt-3 text-3xl font-semibold text-slate-800"><?= number_format($totalJenis, 0, ',', '.') ?></p>
+    <div class="flex flex-wrap gap-4">
+        <!-- Keuangan & Volume -->
+        <article class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md min-w-[200px] flex-1">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-50 text-cyan-600">
+                <i class="fas fa-pills"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Jenis Obat</p>
+                <p class="text-xl font-bold text-slate-800"><?= number_format($totalJenis ?? 0, 0, ',', '.') ?></p>
+            </div>
         </article>
-        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Total Stok</p>
-            <p class="mt-3 text-3xl font-semibold text-slate-800"><?= number_format($totalStok, 0, ',', '.') ?></p>
+
+        <article class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md min-w-[200px] flex-1">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Stok</p>
+                <p class="text-xl font-bold text-slate-800"><?= number_format($totalStok ?? 0, 0, ',', '.') ?></p>
+            </div>
         </article>
-        <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-widest text-slate-500">Nilai Persediaan</p>
-            <p class="mt-3 text-3xl font-semibold text-slate-800">Rp <?= number_format($totalNilai, 0, ',', '.') ?></p>
+
+        <!-- Alerts & Warnings -->
+        <?php $hampirHabis = count(array_filter($obats, function ($o) {
+            return ($o['stok'] ?? 0) <= 10;
+        })); ?>
+        <article class="flex items-center gap-4 rounded-2xl border border-rose-100 bg-rose-50/40 p-4 shadow-sm transition hover:shadow-md min-w-[180px] flex-1">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-rose-600">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-rose-500">Hampir Habis</p>
+                <p class="text-xl font-bold text-rose-700"><?= number_format($hampirHabis, 0, ',', '.') ?></p>
+            </div>
+        </article>
+
+        <article class="flex items-center gap-4 rounded-2xl border border-red-100 bg-red-100/30 p-4 shadow-sm transition hover:shadow-md min-w-[180px] flex-1">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white">
+                <i class="fas fa-calendar-times"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-red-600">Kedaluwarsa</p>
+                <p class="text-xl font-bold text-red-800"><?= number_format($expiredCount ?? 0, 0, ',', '.') ?></p>
+            </div>
+        </article>
+
+        <article class="flex items-center gap-4 rounded-2xl border border-amber-100 bg-amber-50/50 p-4 shadow-sm transition hover:shadow-md min-w-[220px] flex-1">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-amber-600">Segera Kedalwarsa</p>
+                <p class="text-xl font-bold text-amber-700"><?= number_format($expiringSoonCount ?? 0, 0, ',', '.') ?></p>
+            </div>
         </article>
     </div>
 
@@ -59,9 +92,14 @@ foreach ($obats ?? [] as $item) {
                 <table class="min-w-full text-sm">
                     <thead class="bg-slate-100 text-slate-700">
                         <tr>
+                            <th class="px-4 py-3 text-left font-semibold">No</th>
+                            <th class="px-4 py-3 text-left font-semibold">Kode Obat</th>
                             <th class="px-4 py-3 text-left font-semibold">Nama Obat</th>
+                            <th class="px-4 py-3 text-left font-semibold">Kategori</th>
                             <th class="px-4 py-3 text-left font-semibold">Stok</th>
                             <th class="px-4 py-3 text-left font-semibold">Harga</th>
+                            <th class="px-4 py-3 text-left font-semibold">Tanggal Expired</th>
+                            <th class="px-4 py-3 text-left font-semibold">Rak Penyimpanan</th>
                             <th class="px-4 py-3 text-center font-semibold">Aksi</th>
                         </tr>
                     </thead>
@@ -72,20 +110,63 @@ foreach ($obats ?? [] as $item) {
                             </tr>
                         <?php endif; ?>
 
-                        <?php foreach ($obats as $obat): ?>
+                        <?php foreach ($obats as $index => $obat): ?>
                             <tr class="transition hover:bg-blue-50/40">
-                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars($obat['nama']) ?></td>
-                                <td class="px-4 py-3"><?= number_format((int) $obat['stok'], 0, ',', '.') ?></td>
-                                <td class="px-4 py-3">Rp <?= number_format((int) $obat['harga'], 0, ',', '.') ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= $index + 1 ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars($obat['kode_obat'] ?? '') ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800">
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-slate-900"><?= htmlspecialchars($obat['nama'] ?? '') ?></span>
+                                    </div>
+                                </td>
                                 <td class="px-4 py-3">
-                                    <div class="flex items-center justify-center gap-3">
-                                        <a href="/admin/obat/edit/<?= $obat['id'] ?>" class="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100">
-                                            <i class="fas fa-pen"></i>
-                                            Edit
+                                    <div class="flex flex-col">
+                                        <span class="font-semibold text-slate-800"><?= htmlspecialchars($obat['kategori'] ?? '') ?></span>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="flex flex-col">
+                                        <span class="font-semibold text-slate-800"><?= number_format($obat['stok'] ?? 0, 0, ',', '.') ?></span>
+                                        <?php if (($obat['stok'] ?? 0) <= 10): ?>
+                                            <span class="text-[10px] font-bold uppercase text-rose-600">Re-stock!</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 font-medium text-slate-800">Rp <?= number_format($obat['harga'] ?? 0, 0, ',', '.') ?></td>
+                                <td class="px-4 py-3">
+                                    <?php
+                                    $expiryDate = new DateTime($obat['tanggal_expired'] ?? 'now');
+                                    $today = new DateTime();
+                                    $diff = $today->diff($expiryDate);
+                                    $isExpired = $expiryDate < $today;
+                                    $isSoon = !$isExpired && $diff->days <= 90;
+                                    ?>
+                                    <div class="flex flex-col leading-tight">
+                                        <span class="<?= $isExpired ? 'text-red-600 font-bold' : ($isSoon ? 'text-amber-600 font-semibold' : 'text-slate-700') ?>">
+                                            <?= date('d/m/Y', strtotime($obat['tanggal_expired'] ?? 'now')) ?>
+                                        </span>
+                                        <?php if ($isExpired): ?>
+                                            <span class="text-[10px] font-bold uppercase text-red-600">Expired!</span>
+                                        <?php elseif ($isSoon): ?>
+                                            <span class="text-[10px] font-bold uppercase text-amber-600">Segera Expired</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <span class="rounded-lg bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">
+                                        <?= htmlspecialchars($obat['rak_penyimpanan'] ?? '-') ?>
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <a href="/admin/obat/detail/<?= $obat['id'] ?>" title="Lihat Detail" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-teal-200 bg-teal-50 text-teal-600 transition hover:bg-teal-100" title="Detail">
+                                            <i class="fas fa-eye text-xs"></i>
                                         </a>
-                                        <a href="/admin/obat/delete/<?= $obat['id'] ?>" class="inline-flex items-center gap-1 rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100 handle-swal">
-                                            <i class="fas fa-trash"></i>
-                                            Hapus
+                                        <a href="/admin/obat/edit/<?= $obat['id'] ?>" title="Edit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-blue-200 bg-blue-50 text-blue-600 transition hover:bg-blue-100" title="Edit">
+                                            <i class="fas fa-pen text-xs"></i>
+                                        </a>
+                                        <a href="/admin/obat/delete/<?= $obat['id'] ?>" title="Hapus" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-200 bg-red-50 text-red-600 transition hover:bg-red-100 handle-swal" title="Hapus">
+                                            <i class="fas fa-trash text-xs"></i>
                                         </a>
                                     </div>
                                 </td>

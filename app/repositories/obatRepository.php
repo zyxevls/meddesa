@@ -25,20 +25,20 @@ class ObatRepository
     public function create($data)
     {
         $stmt = $this->db->prepare("
-            INSERT INTO obat (nama, harga, stok) 
-            VALUES (?, ?, ?)");
+            INSERT INTO obat (kode_obat, nama, kategori, stok, harga, tanggal_expired, rak_penyimpanan) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute($data);
     }
 
     public function update($id, $data)
     {
         $stmt = $this->db->prepare(
-            "UPDATE obat SET nama=?, harga=?, stok=? WHERE id=?"
+            "UPDATE obat SET kode_obat=?, nama=?, kategori=?, stok=?, harga=?, tanggal_expired=?, rak_penyimpanan=? WHERE id=?"
         );
         $stmt->execute([...$data, $id]);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $stmt = $this->db->prepare("DELETE FROM obat WHERE id=?");
         $stmt->execute([$id]);

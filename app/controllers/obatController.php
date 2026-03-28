@@ -14,6 +14,25 @@ class ObatController
         Middleware::auth();
 
         $obats = $this->repo->all();
+
+        $totalJenis = count($obats);
+        $totalStok = array_sum(array_column($obats, 'stok'));
+
+        $today = new DateTime();
+        $nextMonth = (new DateTime())->modify('+3 months');
+
+        $expiredCount = 0;
+        $expiringSoonCount = 0;
+
+        foreach ($obats as $obat) {
+            $expiryDate = new DateTime($obat['tanggal_expired']);
+            if ($expiryDate < $today) {
+                $expiredCount++;
+            } elseif ($expiryDate <= $nextMonth) {
+                $expiringSoonCount++;
+            }
+        }
+
         $content = BASE_PATH . '/views/admin/obat/index.php';
 
         require BASE_PATH . '/views/layouts/app.php';
@@ -32,9 +51,13 @@ class ObatController
         Middleware::auth();
 
         $this->repo->create([
+            $_POST['kode_obat'],
             $_POST['nama'],
+            $_POST['kategori'],
+            $_POST['stok'],
             $_POST['harga'],
-            $_POST['stok']
+            $_POST['tanggal_expired'],
+            $_POST['rak_penyimpanan'],
         ]);
 
         flash()->success('Data obat berhasil ditambahkan.');
@@ -57,9 +80,13 @@ class ObatController
         Middleware::auth();
 
         $this->repo->update($id, [
+            $_POST['kode_obat'],
             $_POST['nama'],
+            $_POST['kategori'],
+            $_POST['stok'],
             $_POST['harga'],
-            $_POST['stok']
+            $_POST['tanggal_expired'],
+            $_POST['rak_penyimpanan'],
         ]);
 
         flash()->success('Data obat berhasil diperbarui.');
@@ -67,11 +94,21 @@ class ObatController
         exit;
     }
 
+    public function detail($id)
+    {
+        Middleware::auth();
+
+        $obat = $this->repo->find($id);
+        $content = BASE_PATH . '/views/admin/obat/detail.php';
+
+        require BASE_PATH . '/views/layouts/app.php';
+    }
+
     public function destroy($id)
     {
         Middleware::auth();
 
-        $this->repo->delete($id);
+        $this->repo->destroy($id);
 
         flash()->success('Data obat berhasil dihapus.');
         header('Location: /admin/obat');

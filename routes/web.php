@@ -14,6 +14,7 @@ $router->get('/admin/obat/create', 'ObatController@create');
 $router->post('/admin/obat/store', 'ObatController@store');
 $router->get('/admin/obat/edit/{id}', 'ObatController@edit');
 $router->post('/admin/obat/update/{id}', 'ObatController@update');
+$router->get('/admin/obat/detail/{id}', 'ObatController@detail');
 $router->get('/admin/obat/delete/{id}', 'ObatController@destroy');
 
 //pasien
@@ -21,6 +22,6 @@ $router->get('/admin/pasien', 'PasienController@index');
 $router->get('/admin/pasien/create', 'PasienController@create');
 $router->post('/admin/pasien/store', 'PasienController@store');
 $router->get('/admin/pasien/edit/{id}', 'PasienController@edit');
-$router->post('/admin/pasien/{id}/update', 'PasienController@update');
+$router->post('/admin/pasien/update/{id}', 'PasienController@update');
 $router->get('/admin/pasien/detail/{id}', 'PasienController@detail');
 $router->get('/admin/pasien/delete/{id}', 'PasienController@destroy');
