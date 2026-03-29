@@ -199,6 +199,18 @@
             $(window).on('popstate', function() {
                 fetchAndRender(window.location.pathname, false);
             });
+
+            // Live Clock
+            setInterval(function() {
+                var now = new Date();
+                var pad = function(num) {
+                    return (num < 10 ? '0' : '') + num;
+                };
+                var timestamp = pad(now.getHours()) + ':' +
+                    pad(now.getMinutes()) + ':' +
+                    pad(now.getSeconds());
+                $('#live-time').text(timestamp);
+            }, 1000);
         })(window.jQuery);
     </script>
     </body>
