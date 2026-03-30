@@ -11,15 +11,20 @@ class PasienRepository
 
     public function all()
     {
-        return $this->db->query("SELECT * FROM pasien ORDER BY created_at DESC")
+        $rows = $this->db->query("SELECT * FROM pasien ORDER BY created_at DESC")
             ->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(function ($row) {
+            return new Pasien($row);
+        }, $rows);
     }
 
     public function find($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM pasien WHERE id=?");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? new Pasien($row) : null;
     }
 
     public function create($no_rm, $nik, $no_bpjs, $nama, $jenis_kelamin, $tempat_lahir, $tanggal_lahir, $alamat, $no_telephone, $golongan_darah, $pekerjaan, $status_perkawinan, $no_kk)

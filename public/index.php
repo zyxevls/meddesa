@@ -22,6 +22,15 @@ require_once __DIR__ . '/../app/controllers/reservasiController.php';
 require_once __DIR__ . '/../app/repositories/obatRepository.php';
 require_once __DIR__ . '/../app/repositories/pasienRepository.php';
 require_once __DIR__ . '/../app/repositories/reservasiRepository.php';
+require_once __DIR__ . '/../app/repositories/rekamMedisRepository.php';
+//model
+require_once __DIR__ . '/../app/models/BaseModel.php';
+require_once __DIR__ . '/../app/models/Pasien.php';
+require_once __DIR__ . '/../app/models/Obat.php';
+require_once __DIR__ . '/../app/models/Reservasi.php';
+require_once __DIR__ . '/../app/models/RekamMedis.php';
+require_once __DIR__ . '/../app/models/Dokter.php';
+require_once __DIR__ . '/../app/models/User.php';
 require_once __DIR__ . '/../config/database.php';
 
 bootstrapFlasher();

@@ -11,13 +11,17 @@ class ReservasiRepository
 
     public function all()
     {
-        return $this->db->query("
+        $rows = $this->db->query("
             SELECT reservasi.*, pasien.nama, pasien.no_rm, pasien.jenis_kelamin, pasien.golongan_darah, pasien.no_bpjs, dokter.nama_dokter
             FROM reservasi 
             LEFT JOIN pasien ON reservasi.pasien_id = pasien.id
             LEFT JOIN dokter ON reservasi.dokter_id = dokter.id
             ORDER BY reservasi.created_at DESC
         ")->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(function ($row) {
+            return new Reservasi($row);
+        }, $rows);
     }
 
     public function find($id)
@@ -30,7 +34,8 @@ class ReservasiRepository
             WHERE reservasi.id = ?
         ");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? new Reservasi($row) : null;
     }
 
     public function create($pasien_id, $nomor_antrean, $dokter_id, $poli_tujuan, $tanggal_reservasi, $keluhan, $status)

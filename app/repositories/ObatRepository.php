@@ -11,15 +11,20 @@ class ObatRepository
 
     public function all()
     {
-        return  $this->db->query("SELECT * FROM obat ORDER BY id DESC")
+        $rows = $this->db->query("SELECT * FROM obat ORDER BY id DESC")
             ->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(function ($row) {
+            return new Obat($row);
+        }, $rows);
     }
 
     public function find($id)
     {
         $stmt = $this->db->prepare("SELECT * FROM obat WHERE id=?");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? new Obat($row) : null;
     }
 
     public function create($data)
