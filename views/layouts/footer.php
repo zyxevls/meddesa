@@ -29,7 +29,7 @@
             var currentPath = window.location.pathname;
 
             function isAdminPath(path) {
-                return typeof path === 'string' && path.indexOf('/admin/') === 0;
+                return typeof path === 'string' && path.indexOf('/admin/') !== -1;
             }
 
             function normalizePath(path) {
@@ -200,17 +200,25 @@
                 fetchAndRender(window.location.pathname, false);
             });
 
-            // Live Clock
-            setInterval(function() {
-                var now = new Date();
-                var pad = function(num) {
-                    return (num < 10 ? '0' : '') + num;
+            // Live Clock SPA-Friendly
+            (function() {
+                const formatter = new Intl.DateTimeFormat('en-GB', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                });
+
+                const updateClock = () => {
+                    const clockEl = document.getElementById('live-time');
+                    if (clockEl) {
+                        clockEl.textContent = formatter.format(new Date());
+                    }
                 };
-                var timestamp = pad(now.getHours()) + ':' +
-                    pad(now.getMinutes()) + ':' +
-                    pad(now.getSeconds());
-                $('#live-time').text(timestamp);
-            }, 1000);
+
+                updateClock();
+                setInterval(updateClock, 1000);
+            })();
         })(window.jQuery);
     </script>
     </body>
