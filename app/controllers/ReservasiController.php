@@ -21,8 +21,7 @@ class ReservasiController
     public function create()
     {
         Middleware::auth();
-        $pasienRepo = new PasienRepository(Database::connect());
-        $pasiens = $pasienRepo->all();
+        $pasiens = (new PasienRepository(Database::connect()))->all();
         $dokters = $this->getDokters();
 
         $content = BASE_PATH . '/views/admin/reservasi/create.php';
@@ -60,8 +59,7 @@ class ReservasiController
         Middleware::auth();
 
         $reservasi = $this->repo->find($id);
-        $pasienRepo = new PasienRepository(Database::connect());
-        $pasiens = $pasienRepo->all();
+        $pasiens = (new PasienRepository(Database::connect()))->all();
         $dokters = $this->getDokters();
 
         $content = BASE_PATH . '/views/admin/reservasi/edit.php';
