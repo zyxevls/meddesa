@@ -34,3 +34,12 @@ $router->get('/admin/reservasi/edit/{id}', 'ReservasiController@edit');
 $router->post('/admin/reservasi/update/{id}', 'ReservasiController@update');
 $router->get('/admin/reservasi/detail/{id}', 'ReservasiController@detail');
 $router->get('/admin/reservasi/delete/{id}', 'ReservasiController@destroy');
+
+//rekam medis
+$router->get('/admin/rekam-medis', 'RekamMedisController@index');
+$router->get('/admin/rekam-medis/create', 'RekamMedisController@create');
+$router->post('/admin/rekam-medis/store', 'RekamMedisController@store');
+$router->get('/admin/rekam-medis/edit/{id}', 'RekamMedisController@edit');
+$router->post('/admin/rekam-medis/update/{id}', 'RekamMedisController@update');
+$router->get('/admin/rekam-medis/detail/{id}', 'RekamMedisController@detail');
+$router->get('/admin/rekam-medis/delete/{id}', 'RekamMedisController@destroy');

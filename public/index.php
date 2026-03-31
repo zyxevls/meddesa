@@ -18,6 +18,7 @@ require_once __DIR__ . '/../app/controllers/dashboardController.php';
 require_once __DIR__ . '/../app/controllers/obatController.php';
 require_once __DIR__ . '/../app/controllers/pasienController.php';
 require_once __DIR__ . '/../app/controllers/reservasiController.php';
+require_once __DIR__ . '/../app/controllers/rekamMedisController.php';
 //repository
 require_once __DIR__ . '/../app/repositories/obatRepository.php';
 require_once __DIR__ . '/../app/repositories/pasienRepository.php';
