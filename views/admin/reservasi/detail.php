@@ -33,7 +33,7 @@
                         </div>
                         <div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nama Pasien</p>
-                            <p class="mt-1 text-base font-medium text-slate-800"><?= htmlspecialchars($formReservasi['nama'] ?? '-') ?></p>
+                            <p class="mt-1 text-base font-medium text-slate-800"><?= htmlspecialchars($formReservasi['nama_pasien'] ?? '-') ?></p>
                         </div>
                         <div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">No Antrean</p>

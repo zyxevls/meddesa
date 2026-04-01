@@ -116,7 +116,7 @@ $reservasiUmum = $totalReservasi - $reservasiBpjs;
                             <tr class="transition hover:bg-blue-50/40">
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= $index + 1 ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['no_rm'] ?? '-')) ?></td>
-                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nama'] ?? '-')) ?></td>
+                                <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nama_pasien'] ?? '-')) ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nomor_antrean'] ?? '-')) ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['nama_dokter'] ?? '-')) ?></td>
                                 <td class="px-4 py-3 font-medium text-slate-800"><?= htmlspecialchars((string) ($item['poli_tujuan'] ?? '-')) ?></td>
