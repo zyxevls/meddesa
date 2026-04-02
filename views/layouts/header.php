@@ -141,15 +141,15 @@ date_default_timezone_set('Asia/Jakarta');
     <div class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-md">
         <div class="flex justify-between items-center px-6 py-4">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-hospital text-white text-lg"></i>
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center">
+                    <img src="/Lambang_Departemen_Kesehatan_Republik_Indonesia.png" alt="Logo Puskesmas" class="h-8 w-8 object-cover">
                 </div>
-                <h1 class="text-xl font-bold text-slate-800">Medical Desa System Information </h1>
+                <h1 class="text-xl font-bold text-slate-800">Klinik Medika Citra</h1>
             </div>
             <div class="flex items-center space-x-6">
                 <div class="text-right">
                     <p class="text-sm font-medium text-slate-700">Selamat datang,</p>
-                    <p class="text-base font-semibold text-blue-600"><?php echo isset($_SESSION['user']['name']) ? htmlspecialchars($_SESSION['user']['name']) : 'Pengguna'; ?>!
+                    <p class="text-base font-semibold text-blue-600"><?php echo isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Pengguna'; ?>!</p>
                 </div>
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center text-white">
                     <i class="fas fa-user"></i>
