@@ -18,6 +18,7 @@
         "vlucas/phpdotenv": "^5.6",
         "php-flasher/flasher": "*",
         "psr/container": "^2.0",
-        "weblabnl/breadcrumb": "dev-master"
+        "weblabnl/breadcrumb": "dev-master",
+        "nnnick/chartjs": "^4.5"
     }
 }
