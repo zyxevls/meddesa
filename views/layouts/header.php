@@ -87,6 +87,16 @@ date_default_timezone_set('Asia/Jakarta');
             display: none;
         }
 
+        .app-sidebar nav {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .app-sidebar nav::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
         @media (max-width: 1024px) {
             .app-main {
                 margin-left: 0 !important;
