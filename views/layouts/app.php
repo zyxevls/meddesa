@@ -2,7 +2,7 @@
 <?php require BASE_PATH . '/views/layouts/sidebar.php'; ?>
 
 <!-- Main Content Area -->
-<div class="flex-1 ml-56">
+<div class="app-main flex-1 ml-[15rem]">
     <div id="dashboard-content" class="px-8 pt-6 pb-12 max-w-[1600px] mx-auto" data-current-url="<?= htmlspecialchars(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH)) ?>">
         <?php
         $bc = breadcrumbs();
