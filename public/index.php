@@ -19,11 +19,13 @@ require_once __DIR__ . '/../app/controllers/obatController.php';
 require_once __DIR__ . '/../app/controllers/pasienController.php';
 require_once __DIR__ . '/../app/controllers/reservasiController.php';
 require_once __DIR__ . '/../app/controllers/rekamMedisController.php';
+require_once __DIR__ . '/../app/controllers/dokterController.php';
 //repository
 require_once __DIR__ . '/../app/repositories/obatRepository.php';
 require_once __DIR__ . '/../app/repositories/pasienRepository.php';
 require_once __DIR__ . '/../app/repositories/reservasiRepository.php';
 require_once __DIR__ . '/../app/repositories/rekamMedisRepository.php';
+require_once __DIR__ . '/../app/repositories/dokterRepository.php';
 //model
 require_once __DIR__ . '/../app/models/BaseModel.php';
 require_once __DIR__ . '/../app/models/Pasien.php';

@@ -26,6 +26,15 @@ $router->post('/admin/pasien/update/{id}', 'PasienController@update');
 $router->get('/admin/pasien/detail/{id}', 'PasienController@detail');
 $router->get('/admin/pasien/delete/{id}', 'PasienController@destroy');
 
+//dokter
+$router->get('/admin/dokter', 'DokterController@index');
+$router->get('/admin/dokter/create', 'DokterController@create');
+$router->post('/admin/dokter/store', 'DokterController@store');
+$router->get('/admin/dokter/edit/{id}', 'DokterController@edit');
+$router->post('/admin/dokter/update/{id}', 'DokterController@update');
+$router->get('/admin/dokter/detail/{id}', 'DokterController@detail');
+$router->get('/admin/dokter/delete/{id}', 'DokterController@destroy');
+
 //reservasi
 $router->get('/admin/reservasi', 'ReservasiController@index');
 $router->get('/admin/reservasi/create', 'ReservasiController@create');
