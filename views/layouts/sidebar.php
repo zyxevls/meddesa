@@ -3,6 +3,7 @@
 $navItems = [
     ['href' => '/admin/dashboard', 'prefix' => '/admin/dashboard', 'icon' => 'fa-chart-line', 'label' => 'Dashboard'],
     ['href' => '/admin/pasien', 'prefix' => '/admin/pasien', 'icon' => 'fa-users', 'label' => 'Pasien'],
+    ['href' => '/admin/dokter', 'prefix' => '/admin/dokter', 'icon' => 'fa-user-md', 'label' => 'Dokter'],
     ['href' => '/admin/reservasi', 'prefix' => '/admin/reservasi', 'icon' => 'fa-calendar-check', 'label' => 'Reservasi'],
     ['href' => '/admin/rekam-medis', 'prefix' => '/admin/rekam-medis', 'icon' => 'fa-clipboard-list', 'label' => 'Rekam Medis'],
     ['href' => '/admin/obat', 'prefix' => '/admin/obat', 'icon' => 'fa-pills', 'label' => 'Obat'],
@@ -19,12 +20,9 @@ $navItems = [
     <div class="relative flex h-full flex-col">
         <div class="flex items-center justify-between border-b border-white/10 px-4 py-4">
             <div class="flex items-center gap-3 overflow-hidden">
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-600 shadow-lg shadow-blue-900/30">
-                    <i class="fas fa-hospital text-sm text-white"></i>
-                </div>
                 <div class="sidebar-brand-text min-w-0">
                     <p class="text-xs font-semibold uppercase tracking-[0.35em] text-sky-300/80">Panel</p>
-                    <h2 class="text-base font-extrabold tracking-tight text-white">MedDesa</h2>
+                    <h2 class="text-base font-extrabold tracking-tight text-white">Admin</h2>
                 </div>
             </div>
 
@@ -34,12 +32,12 @@ $navItems = [
         </div>
 
         <nav class="flex-1 overflow-y-auto px-3 py-4">
-            <p class="sidebar-section-title px-3 pb-3 text-[11px] font-bold uppercase tracking-[0.3em] text-slate-400">Navigasi Utama</p>
+            <p class="sidebar-section-title px-3 pb-3 text-[11px] font-bold uppercase tracking-[0.3em] text-slate-400">Navigasi</p>
             <ul class="space-y-1">
                 <?php foreach ($navItems as $item): ?>
                     <?php $isActive = strpos($currentPath, $item['prefix']) === 0; ?>
                     <li>
-                        <a href="<?= htmlspecialchars($item['href']) ?>" data-nav-prefix="<?= htmlspecialchars($item['prefix']) ?>" class="sidebar-nav-link group flex items-center gap-3 rounded-2xl border-l-2 border-transparent px-4 py-3.5 transition-all duration-200 <?= $isActive ? 'sidebar-active border-l-sky-400 bg-slate-800/70 text-white shadow-none' : 'text-slate-300 hover:bg-white/10 hover:text-white' ?>">
+                        <a href="<?= htmlspecialchars($item['href']) ?>" title="<?= htmlspecialchars($item['label']) ?>" data-nav-prefix="<?= htmlspecialchars($item['prefix']) ?>" class="sidebar-nav-link group flex items-center gap-3 rounded-2xl border-l-2 border-transparent px-4 py-3.5 transition-all duration-200 <?= $isActive ? 'sidebar-active border-l-sky-400 bg-slate-800/70 text-white shadow-none' : 'text-slate-300 hover:bg-white/10 hover:text-white' ?>">
                             <i class="sidebar-nav-icon fas <?= htmlspecialchars($item['icon']) ?> w-5 shrink-0 text-center text-slate-400 transition group-hover:text-slate-200 <?= $isActive ? 'text-sky-300' : '' ?>"></i>
                             <span class="sidebar-label min-w-0 flex-1 font-semibold tracking-tight"><?= htmlspecialchars($item['label']) ?></span>
                         </a>

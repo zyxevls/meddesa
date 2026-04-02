@@ -144,12 +144,12 @@ date_default_timezone_set('Asia/Jakarta');
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                     <i class="fas fa-hospital text-white text-lg"></i>
                 </div>
-                <h1 class="text-xl font-bold text-slate-800">MedDesa</h1>
+                <h1 class="text-xl font-bold text-slate-800">Medical Desa System Information </h1>
             </div>
             <div class="flex items-center space-x-6">
                 <div class="text-right">
                     <p class="text-sm font-medium text-slate-700">Selamat datang,</p>
-                    <p class="text-base font-semibold text-blue-600"><?php echo isset($_SESSION['user']['name']) ? htmlspecialchars($_SESSION['user']['name']) : 'Pengguna'; ?>!</p>
+                    <p class="text-base font-semibold text-blue-600"><?php echo isset($_SESSION['user']['name']) ? htmlspecialchars($_SESSION['user']['name']) : 'Pengguna'; ?>!
                 </div>
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center text-white">
                     <i class="fas fa-user"></i>
