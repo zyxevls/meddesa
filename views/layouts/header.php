@@ -32,11 +32,6 @@ date_default_timezone_set('Asia/Jakarta');
                 #f8fafc;
         }
 
-        .sidebar-active {
-            background-color: var(--primary-color);
-            color: white;
-        }
-
         .app-sidebar {
             transition: width 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
         }

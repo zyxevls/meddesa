@@ -70,15 +70,22 @@
                     var $link = $(this);
                     var prefix = $link.data('nav-prefix') || '';
                     var isActive = prefix && path.indexOf(prefix) === 0;
+                    var $icon = $link.find('.sidebar-nav-icon').first();
 
                     if (isActive) {
-                        $link.addClass('bg-sky-500/15 text-white shadow-[0_10px_30px_rgba(14,165,233,0.18)] ring-1 ring-sky-400/30');
+                        $link.addClass('border-l-sky-400 bg-slate-800/70 text-white shadow-none');
                         $link.removeClass('text-slate-300 hover:bg-white/10 hover:text-white');
+                        $icon.removeClass('text-slate-300 text-slate-400').addClass('text-sky-300');
                     } else {
-                        $link.removeClass('bg-sky-500/15 text-white shadow-[0_10px_30px_rgba(14,165,233,0.18)] ring-1 ring-sky-400/30');
+                        $link.removeClass('border-l-sky-400 bg-slate-800/70 text-white shadow-none');
                         $link.addClass('text-slate-300 hover:bg-white/10 hover:text-white');
+                        $icon.removeClass('text-sky-300').addClass('text-slate-400');
                     }
                 });
+            }
+
+            function syncSidebarImmediately(path) {
+                updateActiveSidebar(path || window.location.pathname);
             }
 
             function applySidebarState(isCollapsed) {
@@ -128,7 +135,7 @@
                 window.scrollTo(0, 0);
                 $contentRoot.html(html);
                 runScriptsInContent();
-                updateActiveSidebar(path);
+                syncSidebarImmediately(path);
 
                 if (shouldPushState) {
                     history.pushState({
@@ -181,7 +188,7 @@
             }
 
             cachePage(currentPath, $contentRoot.html());
-            updateActiveSidebar(currentPath);
+            syncSidebarImmediately(currentPath);
 
             var savedSidebarState = localStorage.getItem(SIDEBAR_STATE_KEY);
             if (savedSidebarState !== null) {
@@ -224,10 +231,12 @@
                 }
 
                 event.preventDefault();
+                syncSidebarImmediately(normalizedHref);
                 fetchAndRender(normalizedHref, true);
             });
 
             $(window).on('popstate', function() {
+                syncSidebarImmediately(window.location.pathname);
                 fetchAndRender(window.location.pathname, false);
             });
 

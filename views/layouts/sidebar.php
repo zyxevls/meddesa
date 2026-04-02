@@ -39,8 +39,8 @@ $navItems = [
                 <?php foreach ($navItems as $item): ?>
                     <?php $isActive = strpos($currentPath, $item['prefix']) === 0; ?>
                     <li>
-                        <a href="<?= htmlspecialchars($item['href']) ?>" data-nav-prefix="<?= htmlspecialchars($item['prefix']) ?>" class="group flex items-center gap-3 rounded-2xl px-4 py-3.5 transition-all duration-200 <?= $isActive ? 'sidebar-active bg-sky-500/15 text-white shadow-[0_10px_30px_rgba(14,165,233,0.18)] ring-1 ring-sky-400/30' : 'text-slate-300 hover:bg-white/10 hover:text-white' ?>">
-                            <i class="fas <?= htmlspecialchars($item['icon']) ?> w-5 shrink-0 text-center text-slate-300 transition group-hover:text-sky-300 <?= $isActive ? 'text-sky-200' : '' ?>"></i>
+                        <a href="<?= htmlspecialchars($item['href']) ?>" data-nav-prefix="<?= htmlspecialchars($item['prefix']) ?>" class="sidebar-nav-link group flex items-center gap-3 rounded-2xl border-l-2 border-transparent px-4 py-3.5 transition-all duration-200 <?= $isActive ? 'sidebar-active border-l-sky-400 bg-slate-800/70 text-white shadow-none' : 'text-slate-300 hover:bg-white/10 hover:text-white' ?>">
+                            <i class="sidebar-nav-icon fas <?= htmlspecialchars($item['icon']) ?> w-5 shrink-0 text-center text-slate-400 transition group-hover:text-slate-200 <?= $isActive ? 'text-sky-300' : '' ?>"></i>
                             <span class="sidebar-label min-w-0 flex-1 font-semibold tracking-tight"><?= htmlspecialchars($item['label']) ?></span>
                         </a>
                     </li>
