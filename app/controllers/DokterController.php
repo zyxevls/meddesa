@@ -4,6 +4,8 @@ class DokterController
 {
     private $repo;
 
+    private const UPLOAD_DIR = '/uploads/dokter';
+
     public function __construct()
     {
         $this->repo = new DokterRepository(Database::connect());
@@ -32,12 +34,14 @@ class DokterController
     {
         Middleware::auth();
 
+        $imagePath = $this->handleImageUpload($_FILES['images'] ?? null);
+
         $this->repo->create([
             $_POST['nip'],
             $_POST['sip'],
             $_POST['nama_dokter'],
             $_POST['spesialisasi'],
-            $_POST['images'] ?? null,
+            $imagePath,
             $_POST['no_telp'],
             $_POST['is_active'] ?? '1',
         ]);
@@ -61,12 +65,15 @@ class DokterController
     {
         Middleware::auth();
 
+        $existingImage = $_POST['existing_images'] ?? null;
+        $imagePath = $this->handleImageUpload($_FILES['images'] ?? null, $existingImage);
+
         $this->repo->update($id, [
             $_POST['nip'],
             $_POST['sip'],
             $_POST['nama_dokter'],
             $_POST['spesialisasi'],
-            $_POST['images'] ?? null,
+            $imagePath,
             $_POST['no_telp'],
             $_POST['is_active'] ?? '1',
         ]);
@@ -95,5 +102,50 @@ class DokterController
         flash()->success('Data dokter berhasil dihapus.');
         header('Location: /admin/dokter');
         exit;
+    }
+
+    private function handleImageUpload(?array $file, ?string $existingImage = null): ?string
+    {
+        if (!$file || !isset($file['error']) || (int) $file['error'] === UPLOAD_ERR_NO_FILE) {
+            return $existingImage;
+        }
+
+        if ((int) $file['error'] !== UPLOAD_ERR_OK) {
+            return $existingImage;
+        }
+
+        $maxSize = 2 * 1024 * 1024;
+        if ((int) ($file['size'] ?? 0) > $maxSize) {
+            return $existingImage;
+        }
+
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+        $originalName = (string) ($file['name'] ?? '');
+        $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+        if (!in_array($extension, $allowedExtensions, true)) {
+            return $existingImage;
+        }
+
+        $uploadDir = BASE_PATH . '/public' . self::UPLOAD_DIR;
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $fileName = 'dokter_' . date('YmdHis') . '_' . bin2hex(random_bytes(4)) . '.' . $extension;
+        $targetPath = $uploadDir . '/' . $fileName;
+
+        if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+            return $existingImage;
+        }
+
+        if (!empty($existingImage) && strpos($existingImage, self::UPLOAD_DIR . '/') === 0) {
+            $oldPath = BASE_PATH . '/public' . $existingImage;
+            if (is_file($oldPath)) {
+                @unlink($oldPath);
+            }
+        }
+
+        return self::UPLOAD_DIR . '/' . $fileName;
     }
 }
