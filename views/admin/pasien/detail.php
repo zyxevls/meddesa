@@ -93,7 +93,7 @@
                     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-2">
                         <div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nomor Telepon</p>
-                            <p class="mt-1 text-base font-medium text-slate-800 text-blue-600"><?= htmlspecialchars($formPasien['no_telephone'] ?? '-') ?></p>
+                            <p class="mt-1 text-base font-medium text-blue-600"><?= htmlspecialchars($formPasien['no_telephone'] ?? '-') ?></p>
                         </div>
                         <div>
                             <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Nomor Kartu Keluarga</p>
