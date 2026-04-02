@@ -7,8 +7,9 @@ class Dokter extends BaseModel
     public $sip;
     public $nama_dokter;
     public $spesialisasi;
+    public $images;
     public $no_telp;
-    public $alamat;
+    public $is_active;
     public $created_at;
 
     public function __construct($data = [])
@@ -18,8 +19,9 @@ class Dokter extends BaseModel
         $this->sip = $data['sip'] ?? null;
         $this->nama_dokter = $data['nama_dokter'] ?? $data['nama'] ?? null;
         $this->spesialisasi = $data['spesialisasi'] ?? null;
+        $this->images = $data['images'] ?? null;
         $this->no_telp = $data['no_telp'] ?? null;
-        $this->alamat = $data['alamat'] ?? null;
+        $this->is_active = isset($data['is_active']) ? (int) $data['is_active'] : 1;
         $this->created_at = $data['created_at'] ?? null;
     }
 }
