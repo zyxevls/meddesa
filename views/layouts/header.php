@@ -36,6 +36,97 @@ date_default_timezone_set('Asia/Jakarta');
             background-color: var(--primary-color);
             color: white;
         }
+
+        .app-sidebar {
+            transition: width 0.28s ease, transform 0.28s ease, box-shadow 0.28s ease;
+        }
+
+        .app-main {
+            transition: margin-left 0.28s ease, max-width 0.28s ease;
+        }
+
+        .sidebar-label,
+        .sidebar-section-title,
+        .sidebar-brand-text {
+            transition: opacity 0.2s ease, transform 0.2s ease, max-width 0.28s ease, margin 0.28s ease;
+        }
+
+        .sidebar-collapsed .app-sidebar {
+            width: 5rem;
+        }
+
+        .sidebar-collapsed .app-main {
+            margin-left: 5rem !important;
+        }
+
+        .sidebar-collapsed .sidebar-label,
+        .sidebar-collapsed .sidebar-section-title,
+        .sidebar-collapsed .sidebar-brand-text {
+            opacity: 0;
+            transform: translateX(-10px);
+            pointer-events: none;
+            width: 0;
+            max-width: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            white-space: nowrap;
+        }
+
+        .sidebar-collapsed .sidebar-toggle .sidebar-collapse-icon {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-collapsed .app-sidebar nav {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+
+        .sidebar-collapsed .app-sidebar nav a {
+            justify-content: center;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+
+        .sidebar-collapsed .app-sidebar nav .sidebar-section-title {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .app-main {
+                margin-left: 0 !important;
+            }
+
+            .app-sidebar {
+                transform: translateX(-100%);
+            }
+
+            body.sidebar-open .app-sidebar {
+                transform: translateX(0);
+            }
+
+            body.sidebar-collapsed .app-sidebar {
+                width: 15rem;
+            }
+
+            .sidebar-collapsed .app-main {
+                margin-left: 0 !important;
+            }
+
+            .sidebar-collapsed .sidebar-label,
+            .sidebar-collapsed .sidebar-section-title,
+            .sidebar-collapsed .sidebar-brand-text {
+                opacity: 1;
+                transform: none;
+                width: auto;
+                max-width: none;
+                pointer-events: auto;
+                margin: initial;
+                padding: initial;
+                overflow: visible;
+                white-space: normal;
+            }
+        }
     </style>
 </head>
 
