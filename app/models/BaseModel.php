@@ -1,5 +1,6 @@
 <?php
 
+#[AllowDynamicProperties]
 class BaseModel implements ArrayAccess
 {
     public function offsetExists($offset): bool

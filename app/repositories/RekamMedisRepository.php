@@ -4,9 +4,9 @@ class RekamMedisRepository
 {
     private $db;
 
-    public function __construct()
+    public function __construct($db = null)
     {
-        $this->db = Database::connect();
+        $this->db = $db ?: Database::connect();
     }
 
     public function all()
