@@ -6,6 +6,12 @@ trait SqliteSchema
 {
     private function createSqliteConnection(): PDO
     {
+        if (!in_array('sqlite', PDO::getAvailableDrivers(), true)) {
+            $this->markTestSkipped(
+                'pdo_sqlite driver is not available. Enable ext-pdo_sqlite to run SQLite integration tests.'
+            );
+        }
+
         $pdo = new PDO('sqlite::memory:');
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
